@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="MageSuite\Opengraph\Service\TagsCollector">
+        <arguments>
+            <argument name="dataProviders" xsi:type="array">
+                <item name="default" xsi:type="array">
+                    <item name="general" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\General</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                    </item>
+                </item>
+                <item name="cms" xsi:type="array">
+                    <item name="general" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\General</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                    </item>
+                    <item name="cms" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\Cms</item>
+                        <item name="sortOrder" xsi:type="number">20</item>
+                    </item>
+                    <item name="cms_og_image" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\CmsOpengraphImage</item>
+                        <item name="sortOrder" xsi:type="number">30</item>
+                    </item>
+                </item>
+                <item name="category" xsi:type="array">
+                    <item name="general" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\General</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                    </item>
+                    <item name="category" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\Category</item>
+                        <item name="sortOrder" xsi:type="number">20</item>
+                    </item>
+                    <item name="category_og_image" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\CategoryOpengraphImage</item>
+                        <item name="sortOrder" xsi:type="number">30</item>
+                    </item>
+                </item>
+                <item name="product" xsi:type="array">
+                    <item name="general" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\General</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                    </item>
+                    <item name="product" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\Product</item>
+                        <item name="sortOrder" xsi:type="number">20</item>
+                    </item>
+                    <item name="additional" xsi:type="array">
+                        <item name="class" xsi:type="object">MageSuite\Opengraph\DataProviders\ProductAdditional</item>
+                        <item name="sortOrder" xsi:type="number">30</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="MageSuite\Opengraph\Mapper\Product">
+        <arguments>
+            <argument name="items" xsi:type="array">
+                <item name="availability" xsi:type="array">
+                    <item name="type" xsi:type="string">class</item>
+                    <item name="class" xsi:type="object">MageSuite\Opengraph\Mapper\Product\Availability</item>
+                    <item name="parameter" xsi:type="string">object</item>
+                </item>
+                <item name="category" xsi:type="array">
+                    <item name="type" xsi:type="string">class</item>
+                    <item name="class" xsi:type="object">MageSuite\Opengraph\Mapper\Product\Category</item>
+                    <item name="parameter" xsi:type="string">object</item>
+                </item>
+                <item name="condition" xsi:type="array">
+                    <item name="type" xsi:type="string">value</item>
+                    <item name="value" xsi:type="string">new</item>
+                </item>
+                <item name="price" xsi:type="array">
+                    <item name="type" xsi:type="string">class</item>
+                    <item name="class" xsi:type="object">MageSuite\Opengraph\Mapper\Product\Price</item>
+                    <item name="parameter" xsi:type="string">object</item>
+                </item>
+                <item name="sale_price" xsi:type="array">
+                    <item name="type" xsi:type="string">class</item>
+                    <item name="class" xsi:type="object">MageSuite\Opengraph\Mapper\Product\SalePrice</item>
+                    <item name="parameter" xsi:type="string">object</item>
+                </item>
+                <item name="brand" xsi:type="array">
+                    <item name="type" xsi:type="string">attribute</item>
+                    <item name="attribute" xsi:type="string">brand</item>
+                    <item name="attribute_type" xsi:type="string">select</item>
+                </item>
+                <item name="color" xsi:type="array">
+                    <item name="type" xsi:type="string">attribute</item>
+                    <item name="attribute" xsi:type="string">color</item>
+                    <item name="attribute_type" xsi:type="string">select</item>
+                </item>
+                <item name="size" xsi:type="array">
+                    <item name="type" xsi:type="string">attribute</item>
+                    <item name="attribute" xsi:type="string">size</item>
+                    <item name="attribute_type" xsi:type="string">select</item>
+                </item>
+                <item name="sale_price_dates" xsi:type="array">
+                    <item name="type" xsi:type="string">class</item>
+                    <item name="class" xsi:type="object">MageSuite\Opengraph\Mapper\Product\SalePriceDates</item>
+                    <item name="parameter" xsi:type="string">object</item>
+                </item>
+                <item name="pretax_price" xsi:type="array">
+                    <item name="type" xsi:type="string">class</item>
+                    <item name="class" xsi:type="object">MageSuite\Opengraph\Mapper\Product\PreTaxPrice</item>
+                    <item name="parameter" xsi:type="string">object</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="\MageSuite\Opengraph\Factory\TagFactoryInterface"
+                type="\MageSuite\Opengraph\Factory\TagFactory" />
+
+    <type name="Magento\Cms\Model\Page\DataProvider">
+        <plugin name="opengraph_cms_image_provider" type="\MageSuite\Opengraph\Plugin\AfterCmsEditDataProvider" sortOrder="1" />
+    </type>
+
+</config>
+
+
+
+

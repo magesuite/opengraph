@@ -1,0 +1,20 @@
+{
+  "name": "creativestyle/magesuite-opengraph",
+  "description": "Opengraph Extension",
+  "type": "magento2-module",
+  "version": "1.0.3",
+  "homepage": "https://creativestyle.de",
+  "license": "OSL-3.0",
+  "require": {
+    "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0",
+    "magento/framework": "^101.0.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "MageSuite\\Opengraph\\": ""
+    }
+  }
+}

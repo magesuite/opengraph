@@ -1,0 +1,6 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="cms_page_save_before">
+        <observer name="opengraph_cms_save_before" instance="MageSuite\Opengraph\Observer\BeforeCmsPageSave"/>
+    </event>
+</config>
