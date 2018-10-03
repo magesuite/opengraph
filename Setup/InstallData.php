@@ -38,6 +38,8 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
         $this->addCategoryAttributes();
         $this->addProductAttributeGroup();
         $this->addProductAttributes();
+
+
     }
 
     private function addCategoryAttributes()
@@ -78,6 +80,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                 ]
             );
         }
+
         if (!$this->eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, 'og_description')) {
             $this->eavSetup->addAttribute(
                 \Magento\Catalog\Model\Category::ENTITY,
@@ -95,6 +98,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                 ]
             );
         }
+
         if (!$this->eavSetup->getAttributeId(\Magento\Catalog\Model\Category::ENTITY, 'og_type')) {
             $this->eavSetup->addAttribute(
                 \Magento\Catalog\Model\Category::ENTITY,

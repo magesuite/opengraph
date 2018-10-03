@@ -18,7 +18,7 @@ if ($category->getId()) {
     $category->delete();
 }
 
-$brandIds = [600, 700];
+$brandIds = [888, 889];
 foreach ($brandIds as $brandId) {
     $brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
     $brand->load($brandId);

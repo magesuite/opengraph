@@ -48,5 +48,6 @@ class CmsOpengraphImageTest extends \PHPUnit\Framework\TestCase
         $tags = $dataProvider->getTags();
 
         $this->assertContains('image.png', $tags['og:image']);
+        $this->assertEquals('image/png', $tags['og:image:type']);
     }
 }

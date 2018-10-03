@@ -6,7 +6,7 @@ $installer = $objectManager->create(\Magento\Catalog\Setup\CategorySetup::class)
 
 $brand = $objectManager->create('MageSuite\BrandManagement\Model\Brands');
 $brand
-    ->setEntityId(600)
+    ->setEntityId(888)
     ->setStoreId(0)
     ->setUrlKey('/mark/nike.html')
     ->setLayoutUpdateXml('layout update xml')
@@ -20,7 +20,7 @@ $brandRepository->save($brand);
 
 $brand = $objectManager->create('MageSuite\BrandManagement\Model\Brands');
 $brand
-    ->setEntityId(700)
+    ->setEntityId(889)
     ->setStoreId(0)
     ->setUrlKey('/mark/adidas.html')
     ->setLayoutUpdateXml('layout update xml')

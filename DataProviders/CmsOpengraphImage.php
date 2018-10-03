@@ -19,17 +19,24 @@ class CmsOpengraphImage extends TagProvider implements TagProviderInterface
      */
     protected $tagFactory;
 
+    /**
+     * @var \MageSuite\Opengraph\Helper\Mime
+     */
+    protected $mimeHelper;
+
     protected $tags = [];
 
     public function __construct(
         \Magento\Cms\Api\Data\PageInterface $page,
         \MageSuite\Opengraph\Service\CmsImageUrlProvider $cmsImageUrlProvider,
-        \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory
+        \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
+        \MageSuite\Opengraph\Helper\Mime $mimeHelper
 
     ) {
         $this->page = $page;
         $this->cmsImageUrlProvider = $cmsImageUrlProvider;
         $this->tagFactory = $tagFactory;
+        $this->mimeHelper = $mimeHelper;
     }
 
     public function getTags()
@@ -62,13 +69,20 @@ class CmsOpengraphImage extends TagProvider implements TagProviderInterface
         $tag = $this->tagFactory->getTag('image', $imageUrl);
         $this->addTag($tag);
 
-        $title = $pageData['og_title'] ?? $pageData['meta_title'] ?? $pageData['title'] ?? null;
+        $mimeType = $this->mimeHelper->getMimeType($imageUrl);
 
-        if(!$title){
-            return;
+        if($mimeType){
+            $tag = $this->tagFactory->getTag('image:type', $mimeType);
+            $this->addTag($tag);
         }
 
-        $tag = $this->tagFactory->getTag('image:alt', $title);
-        $this->addTag($tag);
+        $title = $pageData['og_title'] ?? $pageData['meta_title'] ?? $pageData['title'] ?? null;
+
+        if($title){
+            $tag = $this->tagFactory->getTag('image:alt', $title);
+            $this->addTag($tag);
+        }
+
+        return;
     }
 }

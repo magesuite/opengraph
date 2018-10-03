@@ -43,6 +43,7 @@
                     <item name="label" xsi:type="string" translate="true">Open Graph Image</item>
                     <item name="formElement" xsi:type="string">fileUploader</item>
                     <item name="componentType" xsi:type="string">fileUploader</item>
+                    <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
                     <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
                     <item name="maxFileSize" xsi:type="number">1048576</item>
                     <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>

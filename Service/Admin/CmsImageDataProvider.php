@@ -37,10 +37,10 @@ class CmsImageDataProvider
             return [];
         }
 
+        $url = $this->cmsImageUrlProvider->getImageUrl($imageName, $path);
+
         $path = 'media/' . $path . $imageName;
         $size = file_exists($path) ? filesize($path) : 0;
-
-        $url = $this->cmsImageUrlProvider->getImageUrl($imageName);
 
         $imageData = [
             [

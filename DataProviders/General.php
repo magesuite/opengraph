@@ -34,6 +34,11 @@ class General extends TagProvider implements TagProviderInterface
      */
     protected $tagFactory;
 
+    /**
+     * @var \MageSuite\Opengraph\Helper\Mime
+     */
+    protected $mimeHelper;
+
     protected $tags = [];
 
     public function __construct(
@@ -42,7 +47,8 @@ class General extends TagProvider implements TagProviderInterface
         \Magento\Framework\Locale\Resolver $localeResolver,
         \Magento\Theme\Block\Html\Header\Logo $logoBlock,
         \MageSuite\Opengraph\Helper\Configuration $configuration,
-        \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory
+        \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
+        \MageSuite\Opengraph\Helper\Mime $mimeHelper
 
     ) {
         $this->pageConfig = $pageConfig;
@@ -51,6 +57,7 @@ class General extends TagProvider implements TagProviderInterface
         $this->logoBlock = $logoBlock;
         $this->configuration = $configuration;
         $this->tagFactory = $tagFactory;
+        $this->mimeHelper = $mimeHelper;
     }
 
     public function getTags()
@@ -111,18 +118,23 @@ class General extends TagProvider implements TagProviderInterface
         }
 
         $tag = $this->tagFactory->getTag('image', $logoSrc);
-
         $this->addTag($tag);
+
+        $mimeType = $this->mimeHelper->getMimeType($logoSrc);
+
+        if($mimeType){
+            $tag = $this->tagFactory->getTag('image:type', $mimeType);
+            $this->addTag($tag);
+        }
 
         $logoAlt = $this->logoBlock->getLogoAlt();
 
-        if(!$logoAlt){
-            return;
+        if($logoAlt){
+            $tag = $this->tagFactory->getTag('image:alt', $logoAlt);
+            $this->addTag($tag);
         }
 
-        $tag = $this->tagFactory->getTag('image:alt', $logoAlt);
-
-        $this->addTag($tag);
+        return;
     }
 
     private function addUrlTag()

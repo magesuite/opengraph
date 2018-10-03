@@ -23,17 +23,24 @@ class Product extends TagProvider implements TagProviderInterface
      */
     protected $tagFactory;
 
+    /**
+     * @var \MageSuite\Opengraph\Helper\Mime
+     */
+    protected $mimeHelper;
+
     protected $tags = [];
 
     public function __construct(
         \Magento\Framework\Registry $registry,
         \Magento\Catalog\Helper\Image $imageHelper,
-        \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory
+        \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
+        \MageSuite\Opengraph\Helper\Mime $mimeHelper
 
     ) {
         $this->registry = $registry;
         $this->imageHelper = $imageHelper;
         $this->tagFactory = $tagFactory;
+        $this->mimeHelper = $mimeHelper;
     }
 
     public function getTags()
@@ -101,9 +108,10 @@ class Product extends TagProvider implements TagProviderInterface
         $ogImage = $product->getOgImage();
         $imageId = ($ogImage and $ogImage != 'no_selection') ? self::OPENGRAPH_PRODUCT_IMAGE_ID : self::DEFAULT_PRODUCT_IMAGE_ID;
 
-        $imageUrl = $this->imageHelper
-            ->init($product, $imageId)
-            ->getUrl();
+        $image = $this->imageHelper
+            ->init($product, $imageId);
+
+        $imageUrl = $image->getUrl();
 
         if(!$imageUrl){
             return;
@@ -112,15 +120,33 @@ class Product extends TagProvider implements TagProviderInterface
         $tag = $this->tagFactory->getTag('image', $imageUrl);
         $this->addTag($tag);
 
+        $this->addAdditionalImageTags($image, $product);
+    }
+
+    protected function addAdditionalImageTags($image, $product)
+    {
+        $tag = $this->tagFactory->getTag('image:width', $image->getWidth());
+        $this->addTag($tag);
+
+        $tag = $this->tagFactory->getTag('image:height', $image->getHeight());
+        $this->addTag($tag);
+
+        $mimeType = $this->mimeHelper->getMimeType($image->getUrl());
+
+        if($mimeType){
+            $tag = $this->tagFactory->getTag('image:type', $mimeType);
+            $this->addTag($tag);
+        }
+
         $productData = array_filter($product->getData());
         $title = $this->getProductTitle($productData);
 
-        if(!$title){
-            return;
+        if($title){
+            $tag = $this->tagFactory->getTag('image:alt', $title);
+            $this->addTag($tag);
         }
 
-        $tag = $this->tagFactory->getTag('image:alt', $title);
-        $this->addTag($tag);
+        return;
     }
 
     private function addTypeTag($productData)

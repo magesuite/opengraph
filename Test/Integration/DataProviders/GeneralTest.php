@@ -38,6 +38,7 @@ class GeneralTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('title', $tags['og:title']);
         $this->assertEquals('description', $tags['og:description']);
         $this->assertContains('images/logo.svg', $tags['og:image']);
+        $this->assertEquals('image/svg+xml', $tags['og:image:type']);
         $this->assertEquals('http://localhost/index.php/', $tags['og:url']);
         $this->assertEquals('en_US', $tags['og:locale']);
     }
