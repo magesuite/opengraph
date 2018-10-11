@@ -1,0 +1,40 @@
+<?php
+
+/** @var \MageSuite\Opengraph\Block\Adminhtml\Preview $block */
+$tags = $block->getTags();
+
+if($tags){ ?>
+    <div class="admin__fieldset">
+        <div class="admin__field">
+            <label class="admin__field-label">
+                <span><?php echo __('Preview'); ?></span>
+            </label>
+            <div class="admin__field-control opengraph_preview">
+                <table>
+                    <tr>
+                        <th><?php echo __('Property'); ?></th>
+                        <th><?php echo __('Value'); ?></th>
+                    </tr>
+                    <?php foreach($tags as $key => $value){
+
+                        if($key == 'og:image'){
+                            $value = '<img src="' . $value . '" width="148" />';
+                        }elseif($key == 'og:url'){
+                            $value = $block->prepareUrl($value);
+                        }
+
+                        ?><tr><?php
+                            echo '<td style="">' . $key . '</td>';
+                            echo '<td>' . $value . '</td>';
+                        ?></tr><?php
+                    } ?>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<style>
+    .admin__field-control.opengraph_preview table {width: 100%;}
+    .admin__field-control.opengraph_preview td, .admin__field-control.opengraph_preview th {border:1px solid #adadad; padding:.6rem 1rem .6rem; text-align: left;}
+</style>

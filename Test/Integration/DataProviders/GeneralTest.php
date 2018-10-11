@@ -27,7 +27,11 @@ class GeneralTest extends \PHPUnit\Framework\TestCase
         $this->pageConfig = $this->objectManager->get(\Magento\Framework\View\Page\Config::class);
     }
 
-
+    /**
+     * @magentoDbIsolation enabled
+     * @magentoConfigFixture current_store facebook/opengraph/default_image default/test.jpeg
+     * @magentoConfigFixture current_store general/store_information/name store_name
+     */
     public function testItReturnsCorrectTags()
     {
         $this->pageConfig->getTitle()->set('title');
@@ -37,8 +41,9 @@ class GeneralTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals('title', $tags['og:title']);
         $this->assertEquals('description', $tags['og:description']);
-        $this->assertContains('images/logo.svg', $tags['og:image']);
-        $this->assertEquals('image/svg+xml', $tags['og:image:type']);
+        $this->assertContains('default/test.jpeg', $tags['og:image']);
+        $this->assertEquals('image/jpeg', $tags['og:image:type']);
+        $this->assertEquals('store_name', $tags['og:image:alt']);
         $this->assertEquals('http://localhost/index.php/', $tags['og:url']);
         $this->assertEquals('en_US', $tags['og:locale']);
     }

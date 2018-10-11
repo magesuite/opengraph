@@ -4,6 +4,8 @@ namespace MageSuite\Opengraph\DataProviders;
 
 class General extends TagProvider implements TagProviderInterface
 {
+    const DEFAULT_IMAGE_PATH = 'opengraph/store/default_image/';
+
     /**
      * @var \Magento\Framework\View\Page\Config
      */
@@ -23,6 +25,11 @@ class General extends TagProvider implements TagProviderInterface
      * @var \Magento\Theme\Block\Html\Header\Logo
      */
     protected $logoBlock;
+
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
 
     /**
      * @var \MageSuite\Opengraph\Helper\Configuration
@@ -46,6 +53,7 @@ class General extends TagProvider implements TagProviderInterface
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Locale\Resolver $localeResolver,
         \Magento\Theme\Block\Html\Header\Logo $logoBlock,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\Opengraph\Helper\Configuration $configuration,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
         \MageSuite\Opengraph\Helper\Mime $mimeHelper
@@ -55,6 +63,7 @@ class General extends TagProvider implements TagProviderInterface
         $this->urlBuilder = $urlBuilder;
         $this->localeResolver = $localeResolver;
         $this->logoBlock = $logoBlock;
+        $this->storeManager = $storeManager;
         $this->configuration = $configuration;
         $this->tagFactory = $tagFactory;
         $this->mimeHelper = $mimeHelper;
@@ -111,30 +120,47 @@ class General extends TagProvider implements TagProviderInterface
 
     private function addImageTag()
     {
-        $logoSrc = $this->logoBlock->getLogoSrc();
+        $imageUrl = $this->getImageTagUrl();
 
-        if(!$logoSrc){
+        if(!$imageUrl){
             return;
         }
 
-        $tag = $this->tagFactory->getTag('image', $logoSrc);
+        $tag = $this->tagFactory->getTag('image', $imageUrl);
         $this->addTag($tag);
 
-        $mimeType = $this->mimeHelper->getMimeType($logoSrc);
+        $mimeType = $this->mimeHelper->getMimeType($imageUrl);
 
         if($mimeType){
             $tag = $this->tagFactory->getTag('image:type', $mimeType);
             $this->addTag($tag);
         }
 
-        $logoAlt = $this->logoBlock->getLogoAlt();
+        $storeName = $this->configuration->getStoreName();
 
-        if($logoAlt){
-            $tag = $this->tagFactory->getTag('image:alt', $logoAlt);
+        if($storeName){
+            $tag = $this->tagFactory->getTag('image:alt', $storeName);
             $this->addTag($tag);
         }
 
         return;
+    }
+
+    private function getImageTagUrl()
+    {
+        $defaultImage = $this->configuration->geDefaultImage();
+
+        if($defaultImage){
+            return $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . self::DEFAULT_IMAGE_PATH . $defaultImage;
+        }
+
+        $logoSrc = $this->logoBlock->getLogoSrc();
+
+        if($logoSrc){
+            return $logoSrc;
+        }
+
+        return null;
     }
 
     private function addUrlTag()

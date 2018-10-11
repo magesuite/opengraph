@@ -5,6 +5,7 @@ namespace MageSuite\Opengraph\Helper;
 class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
 {
     const FACEBOOK_OPENGRAPH_PATH = 'facebook/opengraph';
+    const STORE_NAME_PATH = 'general/store_information/name';
 
     private $config;
 
@@ -38,6 +39,22 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         return $config['fb_app_id'];
+    }
+
+    public function geDefaultImage()
+    {
+        $config = $this->getConfig();
+
+        if(!isset($config['default_image'])){
+            return null;
+        }
+
+        return $config['default_image'];
+    }
+
+    public function getStoreName()
+    {
+        return $this->scopeConfig->getValue(self::STORE_NAME_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     private function getConfig()

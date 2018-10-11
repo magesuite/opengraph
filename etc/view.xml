@@ -7,6 +7,10 @@
                 <width>265</width>
                 <height>265</height>
             </image>
+            <image id="product_base_image" type="image">
+                <width>265</width>
+                <height>265</height>
+            </image>
         </images>
     </media>
 </view>

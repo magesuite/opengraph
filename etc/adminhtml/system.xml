@@ -18,6 +18,15 @@
                     <label>fb:app_id</label>
                     <comment>If set, tag is visible on every page</comment>
                 </field>
+                <field id="default_image" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Image</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">opengraph/store/default_image</upload_dir>
+                    <base_url type="media" scope_info="1">opengraph/store/default_image</base_url>
+                    <comment>
+                        If set, this image will be used as default Open Graph image tag
+                    </comment>
+                </field>
             </group>
         </section>
     </system>

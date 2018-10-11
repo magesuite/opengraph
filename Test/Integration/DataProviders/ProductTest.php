@@ -69,7 +69,6 @@ class ProductTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Product without og tags', $tags['og:title']);
         $this->assertEquals('Description', $tags['og:description']);
         $this->assertContains('image.png', $tags['og:image']);
-        $this->assertEquals('image/png', $tags['og:image:type']);
         $this->assertEquals('product', $tags['og:type']);
     }
 
