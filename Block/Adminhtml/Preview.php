@@ -41,7 +41,8 @@ class Preview extends \Magento\Framework\View\Element\Template
         \MageSuite\Opengraph\Helper\PageType $pageType,
         \MageSuite\Opengraph\Service\TagsCollector $tagsCollector,
         array $data = []
-    ) {
+    )
+    {
         parent::__construct($context, $data);
 
         $this->registry = $registry;
@@ -64,21 +65,27 @@ class Preview extends \Magento\Framework\View\Element\Template
 
         $pageType = $this->getPageType();
 
-        if($pageType == 'product'){
+        if ($pageType == 'product') {
             $product = $this->registry->registry('current_product');
 
             return $this->replaceStoreUrl($product->getProductUrl(), $storeId);
 
-        }elseif($pageType == 'category'){
-            $category = $this->categoryRepository->get($this->getRequest()->getParam('id'), $storeId);
+        } elseif ($pageType == 'category') {
+            $categoryId = $this->getRequest()->getParam('id') ?? null;
 
-            if($category->getLevel() < 2){
+            if (!$categoryId) {
+                return $value;
+            }
+
+            $category = $this->categoryRepository->get($categoryId, $storeId);
+
+            if ($category->getLevel() < 2) {
                 return $this->storeManager->getStore($storeId)->getBaseUrl();
             }
 
             return $this->replaceStoreUrl($category->setStoreId($storeId)->getUrl(), $storeId);
 
-        }elseif ($pageType == 'cms'){
+        } elseif ($pageType == 'cms') {
             $page = $this->registry->registry('cms_page');
 
             return $this->storeManager->getStore($storeId)->getBaseUrl() . $page->getIdentifier();
@@ -89,7 +96,7 @@ class Preview extends \Magento\Framework\View\Element\Template
 
     protected function getPageType()
     {
-        if(!$this->pageTypeValue){
+        if (!$this->pageTypeValue) {
             $this->pageTypeValue = $this->pageType->getPageType();
         }
 
