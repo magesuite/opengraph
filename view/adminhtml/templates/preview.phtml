@@ -17,10 +17,12 @@ if($tags){ ?>
                     </tr>
                     <?php foreach($tags as $key => $value){
 
-                        if($key == 'og:image'){
+                        if ($key == 'og:image') {
                             $value = '<img src="' . $value . '" width="148" />';
-                        }elseif($key == 'og:url'){
+                        } elseif ($key == 'og:url') {
                             $value = $block->prepareUrl($value);
+                        } else {
+                            $value = strip_tags($value);
                         }
 
                         ?><tr><?php

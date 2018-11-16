@@ -24,8 +24,6 @@ class AddTagsToHeadMeta
      */
     protected $tagsCollector;
 
-
-
     public function __construct(
         \Magento\Framework\View\Page\Config $pageConfig,
         \MageSuite\Opengraph\Helper\Configuration $configuration,
@@ -41,7 +39,7 @@ class AddTagsToHeadMeta
 
     public function afterRenderMetadata($subject, $result)
     {
-        if(!$this->configuration->isEnabled()){
+        if (!$this->configuration->isEnabled()) {
             return $result;
         }
 
@@ -49,12 +47,14 @@ class AddTagsToHeadMeta
 
         $tags = $this->tagsCollector->getTags($pageType);
 
-        if(empty($tags)){
+        if (empty($tags)) {
             return $result;
         }
 
-        foreach($tags as $name => $value){
+        foreach ($tags as $name => $value) {
             $metadataTemplate = $this->getMetadataTemplate($name);
+
+            $value = strip_tags($value);
 
             $result .= str_replace(['%name', '%content'], [$name, $value], $metadataTemplate);
         }
