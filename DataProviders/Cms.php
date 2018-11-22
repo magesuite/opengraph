@@ -13,6 +13,16 @@ class Cms extends TagProvider implements TagProviderInterface
     protected $page;
 
     /**
+     * @var \Magento\Cms\Api\PageRepositoryInterface
+     */
+    protected $pageRepository;
+
+    /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    protected $request;
+
+    /**
      * @var \MageSuite\Opengraph\Helper\Data
      */
     protected $dataHelper;
@@ -26,22 +36,32 @@ class Cms extends TagProvider implements TagProviderInterface
 
     public function __construct(
         \Magento\Cms\Api\Data\PageInterface $page,
+        \Magento\Cms\Api\PageRepositoryInterface $pageRepository,
+        \Magento\Framework\App\RequestInterface $request,
         \MageSuite\Opengraph\Helper\Data $dataHelper,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory
 
     ) {
         $this->page = $page;
+        $this->pageRepository = $pageRepository;
+        $this->request = $request;
         $this->dataHelper = $dataHelper;
         $this->tagFactory = $tagFactory;
     }
 
     public function getTags()
     {
-        if(!$this->page->getIdentifier()){
+        if (!$this->page->getIdentifier() and !$this->request->getParam('page_id')) {
             return [];
         }
 
-        $pageData = array_filter($this->page->getData());
+        $pageData = $this->page->getData();
+        if (empty($pageData)) {
+            $page = $this->pageRepository->getById($this->request->getParam('page_id'));
+            $pageData = $page->getData();
+        }
+
+        $pageData = array_filter($pageData);
 
         $this->addTitleTag($pageData);
         $this->addDescriptionTag($pageData);
@@ -54,7 +74,7 @@ class Cms extends TagProvider implements TagProviderInterface
     {
         $title = $pageData['og_title'] ?? $pageData['meta_title'] ?? $pageData['title'] ?? null;
 
-        if(!$title){
+        if (!$title) {
             return;
         }
 
@@ -67,7 +87,7 @@ class Cms extends TagProvider implements TagProviderInterface
     {
         $description = $pageData['og_description'] ?? $pageData['meta_description'] ?? null;
 
-        if(!$description){
+        if (!$description) {
             return;
         }
 
@@ -80,7 +100,7 @@ class Cms extends TagProvider implements TagProviderInterface
     {
         $type = $pageData['og_type'] ?? null;
 
-        if(!$type){
+        if (!$type) {
             $isHomepage = $this->dataHelper->isHomePage();
             $type = $isHomepage ? self::HOMEPAGE_TYPE : self::DEFAULT_TYPE;
         }

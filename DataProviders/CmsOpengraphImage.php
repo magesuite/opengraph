@@ -9,6 +9,16 @@ class CmsOpengraphImage extends TagProvider implements TagProviderInterface
      */
     protected $page;
 
+     /**
+     * @var \Magento\Cms\Api\PageRepositoryInterface
+     */
+    protected $pageRepository;
+
+    /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    protected $request;
+
     /**
      * @var \MageSuite\Opengraph\Service\CmsImageUrlProvider
      */
@@ -28,12 +38,16 @@ class CmsOpengraphImage extends TagProvider implements TagProviderInterface
 
     public function __construct(
         \Magento\Cms\Api\Data\PageInterface $page,
+        \Magento\Cms\Api\PageRepositoryInterface $pageRepository,
+        \Magento\Framework\App\RequestInterface $request,
         \MageSuite\Opengraph\Service\CmsImageUrlProvider $cmsImageUrlProvider,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
         \MageSuite\Opengraph\Helper\Mime $mimeHelper
 
     ) {
         $this->page = $page;
+        $this->pageRepository = $pageRepository;
+        $this->request = $request;
         $this->cmsImageUrlProvider = $cmsImageUrlProvider;
         $this->tagFactory = $tagFactory;
         $this->mimeHelper = $mimeHelper;
@@ -41,11 +55,17 @@ class CmsOpengraphImage extends TagProvider implements TagProviderInterface
 
     public function getTags()
     {
-        if(!$this->page->getIdentifier()){
+        if (!$this->page->getIdentifier() and !$this->request->getParam('page_id')) {
             return [];
         }
 
-        $pageData = array_filter($this->page->getData());
+        $pageData = $this->page->getData();
+        if (empty($pageData)) {
+            $page = $this->pageRepository->getById($this->request->getParam('page_id'));
+            $pageData = $page->getData();
+        }
+
+        $pageData = array_filter($pageData);
 
         $this->addImageTag($pageData);
 
@@ -56,13 +76,13 @@ class CmsOpengraphImage extends TagProvider implements TagProviderInterface
     {
         $opengraphImage = $pageData['og_image'] ?? null;
 
-        if(!$opengraphImage){
+        if (!$opengraphImage) {
             return;
         }
 
         $imageUrl = $this->cmsImageUrlProvider->getImageUrl($opengraphImage);
 
-        if(!$imageUrl){
+        if (!$imageUrl) {
             return;
         }
 
@@ -71,14 +91,14 @@ class CmsOpengraphImage extends TagProvider implements TagProviderInterface
 
         $mimeType = $this->mimeHelper->getMimeType($imageUrl);
 
-        if($mimeType){
+        if ($mimeType) {
             $tag = $this->tagFactory->getTag('image:type', $mimeType);
             $this->addTag($tag);
         }
 
         $title = $pageData['og_title'] ?? $pageData['meta_title'] ?? $pageData['title'] ?? null;
 
-        if($title){
+        if ($title) {
             $tag = $this->tagFactory->getTag('image:alt', $title);
             $this->addTag($tag);
         }
