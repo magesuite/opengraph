@@ -17,7 +17,7 @@
                     <item name="dataType" xsi:type="string">string</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="label" xsi:type="string" translate="true">Open Graph Title</item>
-                    <item name="notice" xsi:type="string" translate="true">If empty, value from "Meta title" field will be used. If this field is also empty, category name will be used.</item>
+                    <item name="notice" xsi:type="string" translate="true">If this field is empty, the value for "Meta Title" will be used. If "Meta Title" is also empty, category name will be used.</item>
                 </item>
             </argument>
         </field>
@@ -25,7 +25,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">category</item>
-                    <item name="notice" xsi:type="string" translate="true">If empty, image from "Image Teaser" field will be used.</item>
+                    <item name="notice" xsi:type="string" translate="true">If this field is empty, the image from "Image Teaser" will be used.</item>
                 </item>
             </argument>
             <settings>
@@ -53,16 +53,11 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">textarea</item>
                     <item name="label" xsi:type="string" translate="true">Open Graph Description</item>
-                    <item name="notice" xsi:type="string" translate="true">If empty, value from "Meta description" field will be used.</item>
+                    <item name="notice" xsi:type="string" translate="true">If this field is empty, the value from "Meta Description" will be used.</item>
                 </item>
             </argument>
         </field>
         <field name="og_type" sortOrder="40" component="Magento_Ui/js/form/element/select" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="notice" xsi:type="string" translate="true">If empty, "website" value will be used.</item>
-                </item>
-            </argument>
             <settings>
                 <dataType>string</dataType>
                 <label translate="true">Open Graph Type</label>

@@ -27,11 +27,6 @@ class Type implements \Magento\Framework\Data\OptionSourceInterface
 
         $options = [];
 
-        $options[] = [
-            'label' => '-- default --',
-            'value' => '',
-        ];
-
         foreach ($this->types as $type) {
             $options[] = [
                 'label' => $type,

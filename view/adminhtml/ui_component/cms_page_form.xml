@@ -15,7 +15,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
-                    <item name="notice" xsi:type="string" translate="true">If empty, value from "Meta title" field will be used. If this field is also empty, page title will be used.</item>
+                    <item name="notice" xsi:type="string" translate="true">If this field is empty, the value for "Meta Title" will be used. If "Meta Title" is also empty, page title will be used.</item>
                 </item>
             </argument>
             <settings>
@@ -28,7 +28,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
-                    <item name="notice" xsi:type="string" translate="true">If empty, value from "Meta description" field will be used.</item>
+                    <item name="notice" xsi:type="string" translate="true">If this field is empty, the value from "Meta Description" will be used.</item>
                 </item>
             </argument>
             <settings>
@@ -53,6 +53,7 @@
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">false</item>
                     </item>
+                    <item name="notice" xsi:type="string" translate="true">If this field is empty, the image from "Image Teaser" will be used.</item>
                 </item>
             </argument>
         </field>
@@ -60,7 +61,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
-                    <item name="notice" xsi:type="string" translate="true">If empty, "website" value will be used for Homepage and "article" value for the rest of cms pages.</item>
                 </item>
             </argument>
             <settings>

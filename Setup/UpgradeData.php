@@ -50,5 +50,13 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
                 \MageSuite\Opengraph\Model\Entity\Attribute\Source\Type::class
             );
         }
+
+        if (version_compare($context->getVersion(), '1.0.4', '<')) {
+            $entityType = $this->eavSetup->getEntityTypeId('catalog_product');
+
+            $this->eavSetup->updateAttribute($entityType,'og_title','note','If this field is empty, the value for "Meta Title" will be used. If "Meta Title" is also empty, product name will be used.');
+            $this->eavSetup->updateAttribute($entityType,'og_description','note','If this field is empty, the value from "Meta Description" will be used. If "Meta Description" is also empty, "Short Description" will be used.');
+            $this->eavSetup->updateAttribute($entityType,'og_type','note','');
+        }
     }
 }
