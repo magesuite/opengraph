@@ -57,6 +57,7 @@ class Product extends TagProvider implements TagProviderInterface
         $this->addDescriptionTag($productData);
         $this->addImageTag($product);
         $this->addTypeTag($productData);
+        $this->addUrlTag($product);
 
         return $this->tags;
     }
@@ -157,4 +158,11 @@ class Product extends TagProvider implements TagProviderInterface
 
         $this->addTag($tag);
     }
+
+    private function addUrlTag($product)
+    {
+        $tag = $this->tagFactory->getTag('url', $product->getProductUrl());
+        $this->addTag($tag);
+    }
+
 }
