@@ -58,6 +58,11 @@
             </argument>
         </field>
         <field name="og_type" sortOrder="40" component="Magento_Ui/js/form/element/select" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">website</item>
+                </item>
+            </argument>
             <settings>
                 <dataType>string</dataType>
                 <label translate="true">Open Graph Type</label>
