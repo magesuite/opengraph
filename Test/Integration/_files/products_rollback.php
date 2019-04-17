@@ -1,5 +1,7 @@
 <?php
 
+include __DIR__.'/product_image_rollback.php';
+
 /** @var \Magento\Framework\Registry $registry */
 $registry = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get('Magento\Framework\Registry');
 
