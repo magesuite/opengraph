@@ -59,7 +59,7 @@ class Category extends TagProvider implements TagProviderInterface
 
     private function addDescriptionTag($categoryData)
     {
-        $description = $categoryData['og_description'] ?? $categoryData['meta_description'] ?? null;
+        $description = $categoryData['og_description'] ?? $categoryData['meta_description'] ?? $categoryData['description'] ?? null;
 
         if(!$description){
             return;
