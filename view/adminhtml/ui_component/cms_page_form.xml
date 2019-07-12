@@ -6,11 +6,6 @@
             <collapsible>true</collapsible>
             <label translate="true">Social Media</label>
         </settings>
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
-            </item>
-        </argument>
         <field name="og_title" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -53,7 +48,6 @@
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">false</item>
                     </item>
-                    <item name="notice" xsi:type="string" translate="true">If this field is empty, the image from "Image Teaser" will be used.</item>
                 </item>
             </argument>
         </field>
