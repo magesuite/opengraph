@@ -3,14 +3,12 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <fieldset name="opengraph" sortOrder="25">
         <settings>
+            <additionalClasses>
+                <class name="cs-csfeature__logo">true</class>
+            </additionalClasses>
             <collapsible>true</collapsible>
             <label translate="true">Social Media</label>
         </settings>
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
-            </item>
-        </argument>
         <field name="og_title" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -44,7 +42,7 @@
                     <item name="formElement" xsi:type="string">fileUploader</item>
                     <item name="componentType" xsi:type="string">fileUploader</item>
                     <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
-                    <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
+                    <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB. If this field is empty, the image from "Image Teaser" will be used.</item>
                     <item name="maxFileSize" xsi:type="number">1048576</item>
                     <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
                     <item name="uploaderConfig" xsi:type="array">
@@ -53,7 +51,6 @@
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">false</item>
                     </item>
-                    <item name="notice" xsi:type="string" translate="true">If this field is empty, the image from "Image Teaser" will be used.</item>
                 </item>
             </argument>
         </field>
