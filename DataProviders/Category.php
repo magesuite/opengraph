@@ -12,6 +12,21 @@ class Category extends TagProvider implements TagProviderInterface
     protected $registry;
 
     /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    protected $request;
+
+    /**
+     * @var \Magento\UrlRewrite\Model\UrlFinderInterface
+     */
+    protected $urlFinder;
+
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
      * @var \MageSuite\Opengraph\Factory\TagFactoryInterface
      */
     protected $tagFactory;
@@ -20,10 +35,16 @@ class Category extends TagProvider implements TagProviderInterface
 
     public function __construct(
         \Magento\Framework\Registry $registry,
+        \Magento\Framework\App\RequestInterface $request,
+        \Magento\UrlRewrite\Model\UrlFinderInterface $urlFinder,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory
 
     ) {
         $this->registry = $registry;
+        $this->request = $request;
+        $this->urlFinder = $urlFinder;
+        $this->storeManager = $storeManager;
         $this->tagFactory = $tagFactory;
     }
 
@@ -31,7 +52,7 @@ class Category extends TagProvider implements TagProviderInterface
     {
         $category = $this->registry->registry('current_category');
 
-        if(!$category or !$category->getId()){
+        if (!$category || !$category->getId()) {
             return [];
         }
 
@@ -40,6 +61,7 @@ class Category extends TagProvider implements TagProviderInterface
         $this->addTitleTag($categoryData);
         $this->addDescriptionTag($categoryData);
         $this->addTypeTag($categoryData);
+        $this->addUrlTag();
 
         return $this->tags;
     }
@@ -48,7 +70,7 @@ class Category extends TagProvider implements TagProviderInterface
     {
         $title = $categoryData['og_title'] ?? $categoryData['meta_title'] ?? $categoryData['name'] ?? null;
 
-        if(!$title){
+        if (!$title) {
             return;
         }
 
@@ -61,7 +83,7 @@ class Category extends TagProvider implements TagProviderInterface
     {
         $description = $categoryData['og_description'] ?? $categoryData['meta_description'] ?? $categoryData['description'] ?? null;
 
-        if(!$description){
+        if (!$description) {
             return;
         }
 
@@ -75,6 +97,24 @@ class Category extends TagProvider implements TagProviderInterface
         $type = $categoryData['og_type'] ?? self::DEFAULT_CATEGORY_OPENGRAPH_TYPE;
 
         $tag = $this->tagFactory->getTag('type', $type);
+
+        $this->addTag($tag);
+    }
+
+    private function addUrlTag()
+    {
+        $urlRewrite = $this->urlFinder->findOneByData([
+            'target_path' => trim($this->request->getPathInfo(), '/'),
+            'store_id' => $this->storeManager->getStore()->getId()
+        ]);
+
+        if (!$urlRewrite) {
+            return;
+        }
+
+        $currentUrl = $this->storeManager->getStore()->getBaseUrl() . $urlRewrite->getRequestPath();
+
+        $tag = $this->tagFactory->getTag('url', $currentUrl);
 
         $this->addTag($tag);
     }
