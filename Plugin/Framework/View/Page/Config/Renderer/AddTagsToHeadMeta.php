@@ -1,6 +1,6 @@
 <?php
 
-namespace MageSuite\Opengraph\Plugin;
+namespace MageSuite\Opengraph\Plugin\Framework\View\Page\Config\Renderer;
 
 class AddTagsToHeadMeta
 {
@@ -29,15 +29,14 @@ class AddTagsToHeadMeta
         \MageSuite\Opengraph\Helper\Configuration $configuration,
         \MageSuite\Opengraph\Helper\PageType $pageType,
         \MageSuite\Opengraph\Service\TagsCollector $tagsCollector
-    )
-    {
+    ) {
         $this->pageConfig = $pageConfig;
         $this->configuration = $configuration;
         $this->pageType = $pageType;
         $this->tagsCollector = $tagsCollector;
     }
 
-    public function afterRenderMetadata($subject, $result)
+    public function afterRenderMetadata(\Magento\Framework\View\Page\Config\Renderer $subject, $result)
     {
         if (!$this->configuration->isEnabled()) {
             return $result;
@@ -52,6 +51,10 @@ class AddTagsToHeadMeta
         }
 
         foreach ($tags as $name => $value) {
+            if (empty($value)) {
+                continue;
+            }
+
             $metadataTemplate = $this->getMetadataTemplate($name);
 
             $value = strip_tags($value);
@@ -66,6 +69,4 @@ class AddTagsToHeadMeta
     {
         return '<meta property="' . $name . '" content="%content"/>' . "\n";
     }
-
-
 }

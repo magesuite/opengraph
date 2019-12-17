@@ -115,7 +115,7 @@
                 type="\MageSuite\Opengraph\Factory\TagFactory" />
 
     <type name="Magento\Cms\Model\Page\DataProvider">
-        <plugin name="opengraph_cms_image_provider" type="\MageSuite\Opengraph\Plugin\AfterCmsEditDataProvider" sortOrder="1" />
+        <plugin name="opengraph_cms_image_provider" type="MageSuite\Opengraph\Plugin\Cms\Model\Page\DataProvider\AfterCmsEditDataProvider" sortOrder="10" />
     </type>
 
 </config>
