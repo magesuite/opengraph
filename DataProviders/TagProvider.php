@@ -13,7 +13,7 @@ class TagProvider implements TagProviderInterface
 
     protected function addTag(\MageSuite\Opengraph\Model\Tag $tag)
     {
-        if(!$tag->getName()){
+        if (!$tag->getName()) {
             return;
         }
 
@@ -22,11 +22,10 @@ class TagProvider implements TagProviderInterface
 
     protected function addProductTag(\MageSuite\Opengraph\Model\Tag $tag)
     {
-        if(!$tag->getName()){
+        if (!$tag->getName()) {
             return;
         }
 
         $this->tags[$tag->getOpengraphProductName()] = $tag->getValue();
     }
-
 }

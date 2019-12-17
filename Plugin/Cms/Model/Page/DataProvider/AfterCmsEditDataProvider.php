@@ -1,12 +1,12 @@
 <?php
-namespace MageSuite\Opengraph\Plugin;
+namespace MageSuite\Opengraph\Plugin\Cms\Model\Page\DataProvider;
 
 class AfterCmsEditDataProvider
 {
     /**
      * @var \MageSuite\Opengraph\Service\Admin\CmsImageDataProvider
      */
-    private $cmsImageDataProvider;
+    protected $cmsImageDataProvider;
 
     public function __construct(\MageSuite\Opengraph\Service\Admin\CmsImageDataProvider $cmsImageDataProvider)
     {
@@ -16,7 +16,7 @@ class AfterCmsEditDataProvider
     public function afterGetData(\Magento\Cms\Model\Page\DataProvider $subject, $result)
     {
         if (!$result) {
-           return $result;
+            return $result;
         }
 
         $pageData = reset($result);

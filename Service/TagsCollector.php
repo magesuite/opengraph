@@ -4,6 +4,9 @@ namespace MageSuite\Opengraph\Service;
 
 class TagsCollector
 {
+    /**
+     * @var array
+     */
     protected $dataProviders;
 
     public function __construct(array $dataProviders)
@@ -13,7 +16,7 @@ class TagsCollector
 
     public function getTags($pageType = null)
     {
-        if(empty($pageType) or !isset($this->dataProviders[$pageType])){
+        if (empty($pageType) || !isset($this->dataProviders[$pageType])) {
             $pageType = \MageSuite\Opengraph\Helper\PageType::DEFAULT_PAGE_TYPE;
         }
 
@@ -21,10 +24,10 @@ class TagsCollector
 
         $tags = [];
 
-        foreach($dataProviders as $dataProvider){
+        foreach ($dataProviders as $dataProvider) {
             $dataProviderClass = $dataProvider['class'];
 
-            if(!is_object($dataProviderClass) or !$dataProviderClass instanceof \MageSuite\Opengraph\DataProviders\TagProviderInterface){
+            if (!is_object($dataProviderClass) || !$dataProviderClass instanceof \MageSuite\Opengraph\DataProviders\TagProviderInterface) {
                 continue;
             }
 
@@ -34,10 +37,9 @@ class TagsCollector
         return $tags;
     }
 
-    private function sortProviders($dataProviders)
+    protected function sortProviders($dataProviders)
     {
-        usort($dataProviders, function ($a, $b)
-        {
+        usort($dataProviders, function ($a, $b) {
             $aSortOrder = $a['sortOrder'] ?? 0;
             $bSortOrder = $b['sortOrder'] ?? 0;
 
@@ -47,14 +49,12 @@ class TagsCollector
         return $dataProviders;
     }
 
-    private function mergeTags($currentTags, $newTags)
+    protected function mergeTags($currentTags, $newTags)
     {
-        if(empty($currentTags)){
+        if (empty($currentTags)) {
             return $newTags;
         }
 
-        return array_replace($currentTags, array_filter($newTags));
+        return array_replace($currentTags, $newTags);
     }
-
-
 }

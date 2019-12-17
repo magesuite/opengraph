@@ -14,11 +14,15 @@ class TagFactory implements TagFactoryInterface
         $this->tagFactory = $tagFactory;
     }
 
-    public function getTag($name, $value)
+    public function getTag($name, $value, $addEvenIfValueIsEmpty = false)
     {
         $tag = $this->tagFactory->create();
 
-        if(!$name or !$value){
+        if (empty($name)) {
+            return $tag;
+        }
+
+        if (!$addEvenIfValueIsEmpty && !$value) {
             return $tag;
         }
 
