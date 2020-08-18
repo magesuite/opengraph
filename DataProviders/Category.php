@@ -56,19 +56,22 @@ class Category extends TagProvider implements TagProviderInterface
             return [];
         }
 
-        $categoryData = array_filter($category->getData());
-
-        $this->addTitleTag($categoryData);
-        $this->addDescriptionTag($categoryData);
-        $this->addTypeTag($categoryData);
+        $this->addTitleTag($category);
+        $this->addDescriptionTag($category);
+        $this->addTypeTag($category);
         $this->addUrlTag();
 
         return $this->tags;
     }
 
-    private function addTitleTag($categoryData)
+    private function addTitleTag($category)
     {
-        $title = $categoryData['og_title'] ?? $categoryData['meta_title'] ?? $categoryData['name'] ?? null;
+        $title = $category->getData('og_title');
+
+        if (empty($title)) {
+            $categoryData = array_filter($category->getData());
+            $title = $categoryData['meta_title'] ?? $categoryData['name'] ?? null;
+        }
 
         if (!$title) {
             return;
@@ -79,9 +82,14 @@ class Category extends TagProvider implements TagProviderInterface
         $this->addTag($tag);
     }
 
-    private function addDescriptionTag($categoryData)
+    private function addDescriptionTag($category)
     {
-        $description = $categoryData['og_description'] ?? $categoryData['meta_description'] ?? $categoryData['description'] ?? null;
+        $description = $category->getData('og_description');
+
+        if (empty($description)) {
+            $categoryData = array_filter($category->getData());
+            $description = $categoryData['og_description'] ?? $categoryData['meta_description'] ?? $categoryData['description'] ?? null;
+        }
 
         if (!$description) {
             return;
@@ -92,8 +100,10 @@ class Category extends TagProvider implements TagProviderInterface
         $this->addTag($tag);
     }
 
-    private function addTypeTag($categoryData)
+    private function addTypeTag($category)
     {
+        $categoryData = array_filter($category->getData());
+
         $type = $categoryData['og_type'] ?? self::DEFAULT_CATEGORY_OPENGRAPH_TYPE;
 
         $tag = $this->tagFactory->getTag('type', $type);
