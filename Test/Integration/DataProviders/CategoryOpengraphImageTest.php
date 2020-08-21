@@ -24,7 +24,7 @@ class CategoryOpengraphImageTest extends \PHPUnit\Framework\TestCase
      */
     private $categoryOpengraphImageProvider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 

@@ -19,7 +19,7 @@ class GeneralTest extends \PHPUnit\Framework\TestCase
      */
     protected $pageConfig;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 

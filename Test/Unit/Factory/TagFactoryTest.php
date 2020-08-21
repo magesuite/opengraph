@@ -14,7 +14,7 @@ class TagFactoryTest extends \PHPUnit\Framework\TestCase
      */
     private $tagFactory;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 

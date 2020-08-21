@@ -18,7 +18,7 @@ class CmsImageDataProviderTest extends \PHPUnit\Framework\TestCase
      */
     protected $filesystem;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 
@@ -26,7 +26,7 @@ class CmsImageDataProviderTest extends \PHPUnit\Framework\TestCase
 
         $this->filesystem = $this->objectManager->create(\Magento\Framework\Filesystem::class);
     }
-    
+
     public function testItReturnsImageDataCorrectly()
     {
         $response = $this->imageTeaserDataProvider->getImageData('magento_image.jpg', \MageSuite\Opengraph\Service\CmsImageUrlProvider::OPENGRAPH_CMS_IMAGE_PATH);
