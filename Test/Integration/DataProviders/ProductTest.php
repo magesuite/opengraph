@@ -66,9 +66,11 @@ class ProductTest extends \PHPUnit\Framework\TestCase
 
         $tags = $this->productProvider->getTags();
 
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
         $this->assertEquals('Product without og tags', $tags['og:title']);
         $this->assertEquals('Description', $tags['og:description']);
-        $this->assertContains('magento_image.jpg', $tags['og:image']);
+        $this->$assertContains('magento_image.jpg', $tags['og:image']);
         $this->assertEquals('product', $tags['og:type']);
     }
 
@@ -83,9 +85,11 @@ class ProductTest extends \PHPUnit\Framework\TestCase
 
         $tags = $this->productProvider->getTags();
 
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
         $this->assertEquals('Og Title', $tags['og:title']);
         $this->assertEquals('Og Description', $tags['og:description']);
-        $this->assertContains('og_image.png', $tags['og:image']);
+        $this->$assertContains('og_image.png', $tags['og:image']);
         $this->assertEquals('article', $tags['og:type']);
     }
 }

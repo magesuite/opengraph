@@ -39,9 +39,11 @@ class GeneralTest extends \PHPUnit\Framework\TestCase
 
         $tags = $this->dataProvider->getTags();
 
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
         $this->assertEquals('title', $tags['og:title']);
         $this->assertEquals('description', $tags['og:description']);
-        $this->assertContains('default/test.jpeg', $tags['og:image']);
+        $this->$assertContains('default/test.jpeg', $tags['og:image']);
         $this->assertEquals('image/jpeg', $tags['og:image:type']);
         $this->assertEquals('store_name', $tags['og:image:alt']);
         $this->assertEquals('http://localhost/index.php/', $tags['og:url']);

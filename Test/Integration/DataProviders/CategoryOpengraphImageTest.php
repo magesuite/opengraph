@@ -56,7 +56,9 @@ class CategoryOpengraphImageTest extends \PHPUnit\Framework\TestCase
 
         $tags = $this->categoryOpengraphImageProvider->getTags();
 
-        $this->assertContains('og_image.png', $tags['og:image']);
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
+        $this->$assertContains('og_image.png', $tags['og:image']);
         $this->assertEquals('image/png', $tags['og:image:type']);
     }
 }
