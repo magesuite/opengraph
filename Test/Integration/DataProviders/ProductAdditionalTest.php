@@ -62,9 +62,9 @@ class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('instock', $tags['product:availability']);
         $this->assertEquals('new', $tags['product:condition']);
         $this->assertEquals('USD', $tags['product:price:currency']);
-        $this->assertEquals('10.0000', $tags['product:price:amount']);
+        $this->assertEquals(10, $tags['product:price:amount'], '', 0);
         $this->assertEquals('USD', $tags['product:sale_price:currency']);
-        $this->assertEquals('5.0000', $tags['product:sale_price:amount']);
+        $this->assertEquals(5, $tags['product:sale_price:amount'], '', 0);
         $this->assertEquals('Adidas', $tags['product:brand']);
         $this->assertEquals('2018-01-01 01:01:02', $tags['product:sale_price_dates:start']);
         $this->assertEquals('2028-01-01 01:11:02', $tags['product:sale_price_dates:end']);
