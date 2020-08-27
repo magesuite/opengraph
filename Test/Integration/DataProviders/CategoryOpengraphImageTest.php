@@ -24,7 +24,7 @@ class CategoryOpengraphImageTest extends \PHPUnit\Framework\TestCase
      */
     private $categoryOpengraphImageProvider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 
@@ -56,7 +56,9 @@ class CategoryOpengraphImageTest extends \PHPUnit\Framework\TestCase
 
         $tags = $this->categoryOpengraphImageProvider->getTags();
 
-        $this->assertContains('og_image.png', $tags['og:image']);
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
+        $this->$assertContains('og_image.png', $tags['og:image']);
         $this->assertEquals('image/png', $tags['og:image:type']);
     }
 }

@@ -14,7 +14,7 @@ class CmsOpengraphImageTest extends \PHPUnit\Framework\TestCase
      */
     protected $pageRepository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 
@@ -47,7 +47,9 @@ class CmsOpengraphImageTest extends \PHPUnit\Framework\TestCase
 
         $tags = $dataProvider->getTags();
 
-        $this->assertContains('image.png', $tags['og:image']);
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
+        $this->$assertContains('image.png', $tags['og:image']);
         $this->assertEquals('image/png', $tags['og:image:type']);
     }
 }

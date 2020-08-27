@@ -22,7 +22,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
      */
     protected $filesystem;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
