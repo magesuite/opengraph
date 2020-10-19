@@ -1,0 +1,22 @@
+"Image file has been not uploaded","Image file has been not uploaded"
+"File can not be saved to the destination folder.","File can not be saved to the destination folder."
+Preview,Preview
+Property,Property
+Value,Value
+MageSuite,MageSuite
+Facebook,Facebook
+"Open Graph","Open Graph"
+"Is Enabled","Is Enabled"
+fb:app_id,fb:app_id
+"Default Image","Default Image"
+"If set, this image will be used as default Open Graph image tag","If set, this image will be used as default Open Graph image tag"
+"Social Media","Social Media"
+"Open Graph Title","Open Graph Title"
+"If this field is empty, the value for ""Meta Title"" will be used. If ""Meta Title"" is also empty, category name will be used.","If this field is empty, the value for ""Meta Title"" will be used. If ""Meta Title"" is also empty, category name will be used."
+"If this field is empty, the image from ""Image Teaser"" will be used.","If this field is empty, the image from ""Image Teaser"" will be used."
+"Open Graph Image","Open Graph Image"
+"Open Graph Description","Open Graph Description"
+"If this field is empty, the value from ""Meta Description"" will be used.","If this field is empty, the value from ""Meta Description"" will be used."
+"Open Graph Type","Open Graph Type"
+"If this field is empty, the value for ""Meta Title"" will be used. If ""Meta Title"" is also empty, page title will be used.","If this field is empty, the value for ""Meta Title"" will be used. If ""Meta Title"" is also empty, page title will be used."
+"Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB. If this field is empty, the image from ""Image Teaser"" will be used.","Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB. If this field is empty, the image from ""Image Teaser"" will be used."
