@@ -1,4 +1,5 @@
 <?php
+
 namespace MageSuite\Opengraph\Test\Unit\Service\Admin;
 
 class CmsImageDataProviderTest extends \PHPUnit\Framework\TestCase
@@ -34,7 +35,9 @@ class CmsImageDataProviderTest extends \PHPUnit\Framework\TestCase
         $this->assertArrayHasKey('url', $response[0]);
         $this->assertArrayHasKey('name', $response[0]);
 
-        $expectedPath = 'http://localhost/pub/media/' . \MageSuite\Opengraph\Service\CmsImageUrlProvider::OPENGRAPH_CMS_IMAGE_PATH . 'magento_image.jpg';
+        $expectedPath = 'http://localhost/media/' . \MageSuite\Opengraph\Service\CmsImageUrlProvider::OPENGRAPH_CMS_IMAGE_PATH . 'magento_image.jpg';
+
+        $response[0]['url'] = str_replace('pub/', '', $response[0]['url']);
         $this->assertEquals($expectedPath, $response[0]['url']);
         $this->assertEquals('magento_image.jpg', $response[0]['name']);
     }
