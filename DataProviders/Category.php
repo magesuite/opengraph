@@ -7,6 +7,11 @@ class Category extends TagProvider implements TagProviderInterface
     const DEFAULT_CATEGORY_OPENGRAPH_TYPE = 'website';
 
     /**
+     * @var \Magento\Framework\View\Page\Config
+     */
+    protected $pageConfig;
+
+    /**
      * @var \Magento\Framework\Registry
      */
     protected $registry;
@@ -34,6 +39,7 @@ class Category extends TagProvider implements TagProviderInterface
     protected $tags = [];
 
     public function __construct(
+        \Magento\Framework\View\Page\Config $pageConfig,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\UrlRewrite\Model\UrlFinderInterface $urlFinder,
@@ -41,6 +47,7 @@ class Category extends TagProvider implements TagProviderInterface
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory
 
     ) {
+        $this->pageConfig = $pageConfig;
         $this->registry = $registry;
         $this->request = $request;
         $this->urlFinder = $urlFinder;
@@ -64,14 +71,15 @@ class Category extends TagProvider implements TagProviderInterface
         return $this->tags;
     }
 
-    private function addTitleTag($category)
+    protected function addTitleTag($category)
     {
-        $title = $category->getData('og_title');
-
-        if (empty($title)) {
-            $categoryData = array_filter($category->getData());
-            $title = $categoryData['meta_title'] ?? $categoryData['name'] ?? null;
-        }
+        $pageConfigTitle = !empty($this->pageConfig->getTitle()->get()) ? $this->pageConfig->getTitle()->get() : null;
+        $categoryData = array_filter($category->getData());
+        $title = $categoryData['og_title']
+            ?? $categoryData['meta_title']
+            ?? $pageConfigTitle
+            ?? $categoryData['name']
+            ?? null;
 
         if (!$title) {
             return;
@@ -82,14 +90,15 @@ class Category extends TagProvider implements TagProviderInterface
         $this->addTag($tag);
     }
 
-    private function addDescriptionTag($category)
+    protected function addDescriptionTag($category)
     {
-        $description = $category->getData('og_description');
-
-        if (empty($description)) {
-            $categoryData = array_filter($category->getData());
-            $description = $categoryData['og_description'] ?? $categoryData['meta_description'] ?? $categoryData['description'] ?? null;
-        }
+        $pageConfigDescription = !empty($this->pageConfig->getDescription()) ? $this->pageConfig->getDescription() : null;
+        $categoryData = array_filter($category->getData());
+        $description = $categoryData['og_description']
+            ?? $categoryData['meta_description']
+            ?? $pageConfigDescription
+            ?? $categoryData['description']
+            ?? null;
 
         if (!$description) {
             return;
@@ -100,7 +109,7 @@ class Category extends TagProvider implements TagProviderInterface
         $this->addTag($tag);
     }
 
-    private function addTypeTag($category)
+    protected function addTypeTag($category)
     {
         $categoryData = array_filter($category->getData());
 
@@ -111,7 +120,7 @@ class Category extends TagProvider implements TagProviderInterface
         $this->addTag($tag);
     }
 
-    private function addUrlTag()
+    protected function addUrlTag()
     {
         $urlRewrite = $this->urlFinder->findOneByData([
             'target_path' => trim($this->request->getPathInfo(), '/'),
