@@ -9,6 +9,11 @@ class Product extends TagProvider implements TagProviderInterface
     const OPENGRAPH_PRODUCT_IMAGE_ID = 'og_image';
 
     /**
+     * @var \Magento\Framework\View\Page\Config
+     */
+    protected $pageConfig;
+
+    /**
      * @var \Magento\Framework\Registry
      */
     protected $registry;
@@ -31,12 +36,14 @@ class Product extends TagProvider implements TagProviderInterface
     protected $tags = [];
 
     public function __construct(
+        \Magento\Framework\View\Page\Config $pageConfig,
         \Magento\Framework\Registry $registry,
         \Magento\Catalog\Helper\Image $imageHelper,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
         \MageSuite\Opengraph\Helper\Mime $mimeHelper
 
     ) {
+        $this->pageConfig = $pageConfig;
         $this->registry = $registry;
         $this->imageHelper = $imageHelper;
         $this->tagFactory = $tagFactory;
@@ -62,7 +69,7 @@ class Product extends TagProvider implements TagProviderInterface
         return $this->tags;
     }
 
-    private function addTitleTag($productData)
+    protected function addTitleTag($productData)
     {
         $title = $this->getProductTitle($productData);
 
@@ -75,36 +82,43 @@ class Product extends TagProvider implements TagProviderInterface
         $this->addTag($tag);
     }
 
-    private function getProductTitle($productData)
+    protected function getProductTitle($productData)
     {
-        return $productData['og_title'] ?? $productData['meta_title'] ?? $productData['name'] ?? null;
+        $pageConfigTitle = !empty($this->pageConfig->getTitle()->get()) ? $this->pageConfig->getTitle()->get() : null;
+        return $productData['og_title']
+            ?? $productData['meta_title']
+            ?? $pageConfigTitle
+            ?? $productData['name']
+            ?? null;
     }
 
-    private function addDescriptionTag($productData)
+    protected function addDescriptionTag($productData)
     {
-        $description = $productData['og_description'] ?? $productData['meta_description'] ?? null;
+        $pageConfigDescription = !empty($this->pageConfig->getDescription()) ? $this->pageConfig->getDescription() : null;
+        $description = $productData['og_description']
+            ?? $productData['meta_description']
+            ?? $productData['short_description']
+            ?? $pageConfigDescription
+            ?? $productData['description']
+            ?? null;
 
-        if(!$description){
-            $description = $productData['short_description'] ?? $productData['description'] ?? null;
-
-            if(!$description){
-                return;
-            }
-
-            $description = $this->stripTags($description);
+        if (!$description) {
+            return;
         }
+
+        $description = $this->trimAndStripTags($description);
 
         $tag = $this->tagFactory->getTag('description', $description);
 
         $this->addTag($tag);
     }
 
-    private function stripTags($content)
+    protected function trimAndStripTags($content)
     {
         return trim(strip_tags($content));
     }
 
-    private function addImageTag($product)
+    protected function addImageTag($product)
     {
         $ogImage = $product->getOgImage();
         $imageId = ($ogImage and $ogImage != 'no_selection') ? self::OPENGRAPH_PRODUCT_IMAGE_ID : self::DEFAULT_PRODUCT_IMAGE_ID;
@@ -150,7 +164,7 @@ class Product extends TagProvider implements TagProviderInterface
         return;
     }
 
-    private function addTypeTag($productData)
+    protected function addTypeTag($productData)
     {
         $type = $productData['og_type'] ?? self::DEFAULT_PRODUCT_OPENGRAPH_TYPE;
 
@@ -159,7 +173,7 @@ class Product extends TagProvider implements TagProviderInterface
         $this->addTag($tag);
     }
 
-    private function addUrlTag($product)
+    protected function addUrlTag($product)
     {
         $tag = $this->tagFactory->getTag('url', $product->getProductUrl());
         $this->addTag($tag);

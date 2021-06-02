@@ -24,14 +24,19 @@ class ProductTest extends \PHPUnit\Framework\TestCase
      */
     private $productProvider;
 
+    /**
+     * @var \Magento\Framework\View\Page\Config
+     */
+    protected $pageConfig;
+
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 
         $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
         $this->productRepository = $this->objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
-
         $this->productProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\Product::class);
+        $this->pageConfig = $this->objectManager->get(\Magento\Framework\View\Page\Config::class);
     }
 
     public static function productsFixture() {
@@ -53,6 +58,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
     {
         $this->itReturnsDefaultTags();
         $this->itReturnsOpengraphTags();
+        $this->itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags();
     }
 
     private function itReturnsDefaultTags()
@@ -91,5 +97,30 @@ class ProductTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Og Description', $tags['og:description']);
         $this->$assertContains('og_image.png', $tags['og:image']);
         $this->assertEquals('article', $tags['og:type']);
+    }
+
+    private function itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags()
+    {
+        $this->pageConfig->getTitle()->set('title');
+        $this->pageConfig->setDescription('description');
+
+        $product = $this->productRepository->get('product_without_og_tags');
+        $product->setMetaTitle('');
+        $product->setMetaDescription('');
+        $product->save();
+
+        if($this->registry->registry('product')){
+            $this->registry->unregister('product');
+        }
+        $this->registry->register('product', $product);
+
+        $tags = $this->productProvider->getTags();
+
+        $assertContains = method_exists($this, 'assertStringContainsString') ? 'assertStringContainsString' : 'assertContains';
+
+        $this->assertEquals('title', $tags['og:title']);
+        $this->assertEquals('description', $tags['og:description']);
+        $this->$assertContains('magento_image.jpg', $tags['og:image']);
+        $this->assertEquals('product', $tags['og:type']);
     }
 }

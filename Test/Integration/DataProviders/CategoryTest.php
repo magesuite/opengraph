@@ -24,14 +24,19 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
      */
     private $categoryProvider;
 
+    /**
+     * @var \Magento\Framework\View\Page\Config
+     */
+    protected $pageConfig;
+
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 
         $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
         $this->categoryRepository = $this->objectManager->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
-
         $this->categoryProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\Category::class);
+        $this->pageConfig = $this->objectManager->get(\Magento\Framework\View\Page\Config::class);
     }
 
     public static function categoriesFixture() {
@@ -53,6 +58,7 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
     {
         $this->itReturnsDefaultTags();
         $this->itReturnsOpengraphTags();
+        $this->itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags();
     }
 
     private function itReturnsDefaultTags()
@@ -85,5 +91,23 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Og Title', $tags['og:title']);
         $this->assertEquals('Og Description', $tags['og:description']);
         $this->assertEquals('article', $tags['og:type']);
+    }
+
+    private function itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags()
+    {
+        $this->pageConfig->getTitle()->set('title');
+        $this->pageConfig->setDescription('description');
+
+        $category = $this->categoryRepository->get(335);
+
+        if($this->registry->registry('current_category')){
+            $this->registry->unregister('current_category');
+        }
+        $this->registry->register('current_category', $category);
+
+        $tags = $this->categoryProvider->getTags();
+
+        $this->assertEquals('title', $tags['og:title']);
+        $this->assertEquals('description', $tags['og:description']);
     }
 }
