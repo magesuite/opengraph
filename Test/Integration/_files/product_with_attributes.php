@@ -66,7 +66,7 @@ $category
     ->setCreatedAt('2014-06-23 09:50:07')
     ->setName('Super Category')
     ->setParentId(2)
-    ->setPath('1/2/333')
+    ->setPath('1/2/555')
     ->setLevel(3)
     ->setAvailableSortBy('name')
     ->setDefaultSortBy('name')
