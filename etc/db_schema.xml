@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="cms_page">
+        <column xsi:type="varchar" name="og_title" length="255" nullable="true" comment="Open Graph page title"/>
+        <column xsi:type="text" name="og_description" nullable="true" comment="Open Graph page description"/>
+        <column xsi:type="varchar" name="og_image" length="255" nullable="true" comment="Open Graph type image"/>
+        <column xsi:type="varchar" name="og_type" length="30" nullable="true" comment="Open Graph type"/>
+    </table>
+</schema>
