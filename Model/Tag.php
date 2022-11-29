@@ -46,7 +46,7 @@ class Tag
      */
     public function setValue($value)
     {
-        $this->value = trim($value);
+        $this->value = trim($value ?? '');
     }
 
     public function getOpengraphName()
