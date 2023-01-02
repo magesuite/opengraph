@@ -40,7 +40,6 @@ class Cms extends TagProvider implements TagProviderInterface
         \Magento\Framework\App\RequestInterface $request,
         \MageSuite\Opengraph\Helper\Data $dataHelper,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory
-
     ) {
         $this->page = $page;
         $this->pageRepository = $pageRepository;
@@ -51,7 +50,7 @@ class Cms extends TagProvider implements TagProviderInterface
 
     public function getTags()
     {
-        if (!$this->page->getIdentifier() and !$this->request->getParam('page_id')) {
+        if (!$this->page->getIdentifier() && !$this->request->getParam('page_id')) {
             return [];
         }
 

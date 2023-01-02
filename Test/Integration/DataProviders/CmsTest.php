@@ -21,7 +21,8 @@ class CmsTest extends \PHPUnit\Framework\TestCase
         $this->pageRepository = $this->objectManager->get(\Magento\Cms\Api\PageRepositoryInterface::class);
     }
 
-    public static function pagesFixture() {
+    public static function pagesFixture()
+    {
         include __DIR__ . '/../_files/pages.php';
     }
 

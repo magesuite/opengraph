@@ -32,14 +32,14 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
         $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
         $this->categoryRepository = $this->objectManager->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
         $this->categoryProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\Category::class);
         $this->pageConfig = $this->objectManager->get(\Magento\Framework\View\Page\Config::class);
     }
 
-    public static function categoriesFixture() {
+    public static function categoriesFixture()
+    {
         include __DIR__ . '/../_files/categories.php';
     }
 
@@ -65,7 +65,7 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
     {
         $category = $this->categoryRepository->get(333);
 
-        if($this->registry->registry('current_category')){
+        if ($this->registry->registry('current_category')) {
             $this->registry->unregister('current_category');
         }
         $this->registry->register('current_category', $category);
@@ -81,7 +81,7 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
     {
         $category = $this->categoryRepository->get(334);
 
-        if($this->registry->registry('current_category')){
+        if ($this->registry->registry('current_category')) {
             $this->registry->unregister('current_category');
         }
         $this->registry->register('current_category', $category);
@@ -100,7 +100,7 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
 
         $category = $this->categoryRepository->get(335);
 
-        if($this->registry->registry('current_category')){
+        if ($this->registry->registry('current_category')) {
             $this->registry->unregister('current_category');
         }
         $this->registry->register('current_category', $category);

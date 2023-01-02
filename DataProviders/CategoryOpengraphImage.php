@@ -25,7 +25,6 @@ class CategoryOpengraphImage extends TagProvider implements TagProviderInterface
         \Magento\Framework\Registry $registry,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
         \MageSuite\Opengraph\Helper\Mime $mimeHelper
-
     ) {
         $this->registry = $registry;
         $this->tagFactory = $tagFactory;
@@ -36,7 +35,7 @@ class CategoryOpengraphImage extends TagProvider implements TagProviderInterface
     {
         $category = $this->registry->registry('current_category');
 
-        if(!$category or !$category->getId()){
+        if (!$category || !$category->getId()) {
             return [];
         }
 
@@ -51,13 +50,13 @@ class CategoryOpengraphImage extends TagProvider implements TagProviderInterface
 
         $opengraphImage = $category->getOgImage() ?? null;
 
-        if(!$opengraphImage){
+        if (!$opengraphImage) {
             return;
         }
 
         $imageUrl = $category->getImageUrl('og_image');
 
-        if(!$imageUrl){
+        if (!$imageUrl) {
             return;
         }
 
@@ -66,7 +65,7 @@ class CategoryOpengraphImage extends TagProvider implements TagProviderInterface
 
         $mimeType = $this->mimeHelper->getMimeType($imageUrl);
 
-        if($mimeType){
+        if ($mimeType) {
             $tag = $this->tagFactory->getTag('image:type', $mimeType);
             $this->addTag($tag);
         }
@@ -74,11 +73,9 @@ class CategoryOpengraphImage extends TagProvider implements TagProviderInterface
         $categoryData = array_filter($category->getData());
         $title = $categoryData['og_title'] ?? $categoryData['meta_title'] ?? $categoryData['name'] ?? null;
 
-        if($title){
+        if ($title) {
             $tag = $this->tagFactory->getTag('image:alt', $title);
             $this->addTag($tag);
         }
-
-        return;
     }
 }

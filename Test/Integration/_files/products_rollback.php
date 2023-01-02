@@ -10,7 +10,7 @@ $registry->register('isSecureArea', true);
 
 $productsIds = [555,556];
 
-foreach($productsIds as $productId){
+foreach ($productsIds as $productId) {
     $product = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Catalog\Model\Product');
     $product->load($productId);
     if ($product->getId()) {

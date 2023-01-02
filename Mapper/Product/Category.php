@@ -12,13 +12,12 @@ class Category
     /**
      * @var \Magento\Catalog\Api\CategoryRepositoryInterface
      */
-    private $categoryRepository;
+    protected $categoryRepository;
 
     public function __construct(
         \Magento\Framework\Registry $registry,
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
-    )
-    {
+    ) {
         $this->registry = $registry;
         $this->categoryRepository = $categoryRepository;
     }
@@ -27,13 +26,13 @@ class Category
     {
         $currentCategory = $this->registry->registry('current_category');
 
-        if($currentCategory and $currentCategory->getId()){
+        if ($currentCategory && $currentCategory->getId()) {
             return $currentCategory->getName();
         }
 
         $productCategories = $product->getAvailableInCategories();
 
-        if(empty($productCategories) or !is_array($productCategories)) {
+        if (empty($productCategories) || !is_array($productCategories)) {
             return null;
         }
 

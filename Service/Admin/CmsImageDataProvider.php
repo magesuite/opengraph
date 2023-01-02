@@ -3,23 +3,18 @@ namespace MageSuite\Opengraph\Service\Admin;
 
 class CmsImageDataProvider
 {
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    protected $storeManager;
-
-    /**
-     * @var \MageSuite\Opengraph\Service\CmsImageUrlProvider
-     */
-    protected $cmsImageUrlProvider;
+    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected \MageSuite\Opengraph\Service\CmsImageUrlProvider $cmsImageUrlProvider;
+    protected \Magento\Downloadable\Helper\File $fileHelper;
 
     public function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \MageSuite\Opengraph\Service\CmsImageUrlProvider $cmsImageUrlProvider
-    )
-    {
+        \MageSuite\Opengraph\Service\CmsImageUrlProvider $cmsImageUrlProvider,
+        \Magento\Downloadable\Helper\File $fileHelper,
+    ) {
         $this->storeManager = $storeManager;
         $this->cmsImageUrlProvider = $cmsImageUrlProvider;
+        $this->fileHelper = $fileHelper;
     }
 
     /**
@@ -29,18 +24,18 @@ class CmsImageDataProvider
      */
     public function getImageData($imageName, $path)
     {
-        if(is_array($imageName)){
+        if (is_array($imageName)) {
             $imageName = $imageName[0]['name'] ?? null;
         }
 
-        if(empty($imageName)){
+        if (empty($imageName)) {
             return [];
         }
 
         $url = $this->cmsImageUrlProvider->getImageUrl($imageName, $path);
 
-        $path = 'media/' . $path . $imageName;
-        $size = file_exists($path) ? filesize($path) : 0;
+        $file = $path . $imageName;
+        $size = $this->fileHelper->ensureFileInFilesystem($file) ? $this->fileHelper->getFileSize($file) : 0;
 
         $imageData = [
             [
@@ -52,5 +47,4 @@ class CmsImageDataProvider
 
         return $imageData;
     }
-
 }

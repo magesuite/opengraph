@@ -45,7 +45,6 @@ class Category extends TagProvider implements TagProviderInterface
         \Magento\UrlRewrite\Model\UrlFinderInterface $urlFinder,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory
-
     ) {
         $this->pageConfig = $pageConfig;
         $this->registry = $registry;

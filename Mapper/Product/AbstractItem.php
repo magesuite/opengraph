@@ -23,8 +23,7 @@ class AbstractItem
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Stdlib\DateTime\DateTime $dateTime,
         \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
-    )
-    {
+    ) {
         $this->storeManager = $storeManager;
         $this->dateTime = $dateTime;
         $this->priceCurrency = $priceCurrency;
@@ -49,5 +48,4 @@ class AbstractItem
 
         return $result;
     }
-
 }

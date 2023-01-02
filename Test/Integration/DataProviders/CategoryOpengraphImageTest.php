@@ -34,7 +34,8 @@ class CategoryOpengraphImageTest extends \PHPUnit\Framework\TestCase
         $this->categoryOpengraphImageProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\CategoryOpengraphImage::class);
     }
 
-    public static function categoriesFixture() {
+    public static function categoriesFixture()
+    {
         include __DIR__ . '/../_files/categories.php';
     }
 

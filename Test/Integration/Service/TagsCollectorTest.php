@@ -17,15 +17,12 @@ class TagsCollectorTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
         $this->tagsCollector = $this->objectManager->get(\MageSuite\Opengraph\Service\TagsCollector::class);
     }
-
 
     public function testItReturnsTags()
     {
         $tags = $this->tagsCollector->getTags();
-
         $this->assertEquals('http://localhost/index.php/', $tags['og:url']);
         $this->assertEquals('en_US', $tags['og:locale']);
     }

@@ -1,18 +1,13 @@
 <?php
 
-use Magento\Framework\App\Filesystem\DirectoryList;
-
 /** @var $config \Magento\Catalog\Model\Product\Media\Config */
-$config = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-    \Magento\Catalog\Model\Product\Media\Config::class
-);
+$config = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
+    ->get(\Magento\Catalog\Model\Product\Media\Config::class);
 
 /** @var \Magento\Framework\Filesystem\Directory\WriteInterface $mediaDirectory */
-$mediaDirectory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(
-    \Magento\Framework\Filesystem::class
-)->getDirectoryWrite(
-    DirectoryList::MEDIA
-);
+$mediaDirectory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
+    ->get(\Magento\Framework\Filesystem::class)
+    ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
 
 $mediaDirectory->delete($config->getBaseMediaPath());
 $mediaDirectory->delete($config->getBaseTmpMediaPath());

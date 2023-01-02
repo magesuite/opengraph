@@ -17,17 +17,13 @@ class TagTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
         $this->tag = $this->objectManager->get(\MageSuite\Opengraph\Model\Tag::class);
     }
-
 
     public function testItConvertTag()
     {
         $tag = $this->tag;
-
         $tag->setName('name');
-
         $this->assertEquals('og:name', $tag->getOpengraphName());
     }
 }

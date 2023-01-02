@@ -34,7 +34,7 @@ $brandRepository->save($brand);
 
 $brandAttribute = $eavConfig->getAttribute(\Magento\Catalog\Model\Product::ENTITY, 'brand');
 $brandAttributeOptions = [];
-foreach($brandAttribute->getSource()->getAllOptions(false) AS $key => $option){
+foreach ($brandAttribute->getSource()->getAllOptions(false) as $key => $option) {
     $brandAttributeOptions[$option['label']] = $option['value'];
 }
 
@@ -74,9 +74,6 @@ $category
     ->setPosition(1)
     ->setAvailableSortBy(['position'])
     ->setMetaDescription('Meta description')
-    ->setPostedProducts([
-        557 => 8
-    ])
+    ->setPostedProducts([557 => 8])
     ->save()
     ->reindex();
-

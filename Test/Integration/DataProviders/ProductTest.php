@@ -32,14 +32,14 @@ class ProductTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
         $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
         $this->productRepository = $this->objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
         $this->productProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\Product::class);
         $this->pageConfig = $this->objectManager->get(\Magento\Framework\View\Page\Config::class);
     }
 
-    public static function productsFixture() {
+    public static function productsFixture()
+    {
         include __DIR__ . '/../_files/products.php';
     }
 
@@ -65,7 +65,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->productRepository->get('product_without_og_tags');
 
-        if($this->registry->registry('product')){
+        if ($this->registry->registry('product')) {
             $this->registry->unregister('product');
         }
         $this->registry->register('product', $product);
@@ -84,7 +84,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->productRepository->get('product_with_og_tags');
 
-        if($this->registry->registry('product')){
+        if ($this->registry->registry('product')) {
             $this->registry->unregister('product');
         }
         $this->registry->register('product', $product);
@@ -109,7 +109,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
         $product->setMetaDescription('');
         $product->save();
 
-        if($this->registry->registry('product')){
+        if ($this->registry->registry('product')) {
             $this->registry->unregister('product');
         }
         $this->registry->register('product', $product);

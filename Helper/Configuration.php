@@ -6,8 +6,9 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
 {
     const FACEBOOK_OPENGRAPH_PATH = 'facebook/opengraph';
     const STORE_NAME_PATH = 'general/store_information/name';
+    const CMS_HOMEPAGE_PATH = 'web/default/cms_home_page';
 
-    private $config;
+    protected $config;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
@@ -19,7 +20,6 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         parent::__construct($context);
-
         $this->scopeConfig = $scopeConfig;
     }
 
@@ -34,7 +34,7 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
     {
         $config = $this->getConfig();
 
-        if(!isset($config['fb_app_id'])){
+        if (!isset($config['fb_app_id'])) {
             return null;
         }
 
@@ -45,7 +45,7 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
     {
         $config = $this->getConfig();
 
-        if(!isset($config['default_image'])){
+        if (!isset($config['default_image'])) {
             return null;
         }
 
@@ -57,9 +57,14 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
         return $this->scopeConfig->getValue(self::STORE_NAME_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
+    public function getHomepageIdentifier()
+    {
+        return $this->scopeConfig->getValue(self::CMS_HOMEPAGE_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
     private function getConfig()
     {
-        if(!$this->config){
+        if (!$this->config) {
             $this->config = $this->scopeConfig->getValue(self::FACEBOOK_OPENGRAPH_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         }
 

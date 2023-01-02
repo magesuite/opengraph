@@ -6,18 +6,17 @@ class PageType extends \Magento\Framework\App\Helper\AbstractHelper
 {
     const DEFAULT_PAGE_TYPE = 'default';
 
-    private $allowedRouteNames = ['cms', 'catalog'];
+    protected $allowedRouteNames = ['cms', 'catalog'];
 
     /**
      * @var \Magento\Framework\App\Request\Http
      */
-    private $request;
+    protected $request;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    private $registry;
-
+    protected $registry;
 
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -25,7 +24,6 @@ class PageType extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\Registry $registry
     ) {
         parent::__construct($context);
-
         $this->request = $request;
         $this->registry = $registry;
     }
@@ -34,19 +32,19 @@ class PageType extends \Magento\Framework\App\Helper\AbstractHelper
     {
         $routeName = $this->request->getRouteName();
 
-        if(!in_array($routeName, $this->allowedRouteNames)){
+        if (!in_array($routeName, $this->allowedRouteNames)) {
             return self::DEFAULT_PAGE_TYPE;
         }
 
         $product = $this->registry->registry('product');
 
-        if($product){
+        if ($product) {
             return 'product';
         }
 
         $category = $this->registry->registry('current_category');
 
-        if($category){
+        if ($category) {
             return 'category';
         }
 

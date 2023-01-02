@@ -41,7 +41,6 @@ class Product extends TagProvider implements TagProviderInterface
         \Magento\Catalog\Helper\Image $imageHelper,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
         \MageSuite\Opengraph\Helper\Mime $mimeHelper
-
     ) {
         $this->pageConfig = $pageConfig;
         $this->registry = $registry;
@@ -54,7 +53,7 @@ class Product extends TagProvider implements TagProviderInterface
     {
         $product = $this->registry->registry('product');
 
-        if(!$product or !$product->getId()){
+        if (!$product || !$product->getId()) {
             return [];
         }
 
@@ -73,7 +72,7 @@ class Product extends TagProvider implements TagProviderInterface
     {
         $title = $this->getProductTitle($productData);
 
-        if(!$title){
+        if (!$title) {
             return;
         }
 
@@ -121,14 +120,14 @@ class Product extends TagProvider implements TagProviderInterface
     protected function addImageTag($product)
     {
         $ogImage = $product->getOgImage();
-        $imageId = ($ogImage and $ogImage != 'no_selection') ? self::OPENGRAPH_PRODUCT_IMAGE_ID : self::DEFAULT_PRODUCT_IMAGE_ID;
+        $imageId = ($ogImage && $ogImage != 'no_selection') ? self::OPENGRAPH_PRODUCT_IMAGE_ID : self::DEFAULT_PRODUCT_IMAGE_ID;
 
         $image = $this->imageHelper
             ->init($product, $imageId);
 
         $imageUrl = $image->getUrl();
 
-        if(!$imageUrl){
+        if (!$imageUrl) {
             return;
         }
 
@@ -148,7 +147,7 @@ class Product extends TagProvider implements TagProviderInterface
 
         $mimeType = $this->mimeHelper->getMimeType($image->getUrl());
 
-        if($mimeType){
+        if ($mimeType) {
             $tag = $this->tagFactory->getTag('image:type', $mimeType);
             $this->addTag($tag);
         }
@@ -156,12 +155,10 @@ class Product extends TagProvider implements TagProviderInterface
         $productData = array_filter($product->getData());
         $title = $this->getProductTitle($productData);
 
-        if($title){
+        if ($title) {
             $tag = $this->tagFactory->getTag('image:alt', $title);
             $this->addTag($tag);
         }
-
-        return;
     }
 
     protected function addTypeTag($productData)
@@ -178,5 +175,4 @@ class Product extends TagProvider implements TagProviderInterface
         $tag = $this->tagFactory->getTag('url', $product->getProductUrl());
         $this->addTag($tag);
     }
-
 }
