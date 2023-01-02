@@ -25,8 +25,7 @@ class ProductAdditional extends TagProvider implements TagProviderInterface
         \Magento\Framework\Registry $registry,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
         \MageSuite\Opengraph\Mapper\Product $productMapper
-    )
-    {
+    ) {
         $this->registry = $registry;
         $this->tagFactory = $tagFactory;
         $this->productMapper = $productMapper;
@@ -36,13 +35,13 @@ class ProductAdditional extends TagProvider implements TagProviderInterface
     {
         $product = $this->registry->registry('product');
 
-        if (!$product or !$product->getId()) {
+        if (!$product || !$product->getId()) {
             return [];
         }
 
         $items = $this->productMapper->getItems($product);
 
-        foreach($items as $name => $value){
+        foreach ($items as $name => $value) {
             $tag = $this->tagFactory->getTag($name, $value);
             $this->addProductTag($tag);
         }

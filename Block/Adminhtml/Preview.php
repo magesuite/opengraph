@@ -41,8 +41,7 @@ class Preview extends \Magento\Framework\View\Element\Template
         \MageSuite\Opengraph\Helper\PageType $pageType,
         \MageSuite\Opengraph\Service\TagsCollector $tagsCollector,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
 
         $this->registry = $registry;
@@ -108,6 +107,7 @@ class Preview extends \Magento\Framework\View\Element\Template
         return str_replace(
             $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB),
             $this->storeManager->getStore($storeId)->getBaseUrl(),
-            $url);
+            $url
+        );
     }
 }

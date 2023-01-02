@@ -57,7 +57,6 @@ class General extends TagProvider implements TagProviderInterface
         \MageSuite\Opengraph\Helper\Configuration $configuration,
         \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
         \MageSuite\Opengraph\Helper\Mime $mimeHelper
-
     ) {
         $this->pageConfig = $pageConfig;
         $this->urlBuilder = $urlBuilder;
@@ -85,7 +84,7 @@ class General extends TagProvider implements TagProviderInterface
     {
         $fbAppIdTag = $this->configuration->getFbAppId();
 
-        if(!$fbAppIdTag) {
+        if (!$fbAppIdTag) {
             return;
         }
 
@@ -96,7 +95,7 @@ class General extends TagProvider implements TagProviderInterface
     {
         $title = $this->pageConfig->getTitle()->get();
 
-        if(!$title){
+        if (!$title) {
             return;
         }
 
@@ -109,7 +108,7 @@ class General extends TagProvider implements TagProviderInterface
     {
         $description = $this->pageConfig->getDescription();
 
-        if(!$description){
+        if (!$description) {
             return;
         }
 
@@ -122,7 +121,7 @@ class General extends TagProvider implements TagProviderInterface
     {
         $imageUrl = $this->getImageTagUrl();
 
-        if(!$imageUrl){
+        if (!$imageUrl) {
             return;
         }
 
@@ -131,32 +130,30 @@ class General extends TagProvider implements TagProviderInterface
 
         $mimeType = $this->mimeHelper->getMimeType($imageUrl);
 
-        if($mimeType){
+        if ($mimeType) {
             $tag = $this->tagFactory->getTag('image:type', $mimeType);
             $this->addTag($tag);
         }
 
         $storeName = $this->configuration->getStoreName();
 
-        if($storeName){
+        if ($storeName) {
             $tag = $this->tagFactory->getTag('image:alt', $storeName);
             $this->addTag($tag);
         }
-
-        return;
     }
 
     private function getImageTagUrl()
     {
         $defaultImage = $this->configuration->geDefaultImage();
 
-        if($defaultImage){
+        if ($defaultImage) {
             return $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . self::DEFAULT_IMAGE_PATH . $defaultImage;
         }
 
         $logoSrc = $this->logoBlock->getLogoSrc();
 
-        if($logoSrc){
+        if ($logoSrc) {
             return $logoSrc;
         }
 
@@ -176,7 +173,7 @@ class General extends TagProvider implements TagProviderInterface
     {
         $locale = $this->localeResolver->getLocale();
 
-        if(!$locale){
+        if (!$locale) {
             return;
         }
 

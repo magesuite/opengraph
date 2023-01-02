@@ -6,7 +6,7 @@ class SalePrice extends AbstractItem
 {
     public function getTagValue($product)
     {
-        if(!$this->hasSpecialPrice($product)){
+        if (!$this->hasSpecialPrice($product)) {
             return null;
         }
 
@@ -17,7 +17,7 @@ class SalePrice extends AbstractItem
 
         $productType = $product->getTypeId();
 
-        if($productType != \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE or $productType != \Magento\Bundle\Model\Product\Type::TYPE_CODE){
+        if ($productType != \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE || $productType != \Magento\Bundle\Model\Product\Type::TYPE_CODE) {
             return $this->formatPrice($return);
         }
 

@@ -2,9 +2,6 @@
 
 namespace MageSuite\Opengraph\Model\Source;
 
-use Magento\Framework\View\Model\PageLayout\Config\BuilderInterface;
-
-
 class Type implements \Magento\Framework\Data\OptionSourceInterface
 {
     /**

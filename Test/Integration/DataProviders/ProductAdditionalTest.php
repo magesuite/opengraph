@@ -34,11 +34,13 @@ class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
         $this->productAdditionalProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\ProductAdditional::class);
     }
 
-    public static function productWithAttributesFixture() {
+    public static function productWithAttributesFixture()
+    {
         include __DIR__ . '/../_files/product_with_attributes.php';
     }
 
-    public static function productWithAttributesFixtureRollback() {
+    public static function productWithAttributesFixtureRollback()
+    {
         include __DIR__ . '/../_files/product_with_attributes_rollback.php';
     }
 
@@ -52,7 +54,7 @@ class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
     {
         $product = $this->productRepository->get('product_with_attributes');
 
-        if($this->registry->registry('product')){
+        if ($this->registry->registry('product')) {
             $this->registry->unregister('product');
         }
         $this->registry->register('product', $product);
@@ -68,6 +70,5 @@ class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Adidas', $tags['product:brand']);
         $this->assertEquals('2018-01-01 01:01:02', $tags['product:sale_price_dates:start']);
         $this->assertEquals('2028-01-01 01:11:02', $tags['product:sale_price_dates:end']);
-
     }
 }

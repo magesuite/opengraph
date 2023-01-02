@@ -10,7 +10,7 @@ $registry->register('isSecureArea', true);
 $pages = ['page_without_og_tags'];
 
 /** @var $page \Magento\Cms\Model\Page */
-foreach($pages as $pageId)  {
+foreach ($pages as $pageId) {
     $page = $objectManager->create('Magento\Cms\Model\Page');
     $page->load($pageId);
 

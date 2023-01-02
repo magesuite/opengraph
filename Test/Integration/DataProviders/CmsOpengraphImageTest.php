@@ -17,11 +17,11 @@ class CmsOpengraphImageTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
         $this->pageRepository = $this->objectManager->get(\Magento\Cms\Api\PageRepositoryInterface::class);
     }
 
-    public static function pagesFixture() {
+    public static function pagesFixture()
+    {
         include __DIR__ . '/../_files/pages.php';
     }
 

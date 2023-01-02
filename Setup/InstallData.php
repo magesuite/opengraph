@@ -22,24 +22,19 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
     public function __construct(
         \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory,
         \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetupInterface
-    )
-    {
+    ) {
         $this->eavSetupFactory = $eavSetupFactory;
         $this->moduleDataSetupInterface = $moduleDataSetupInterface;
-
         $this->eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetupInterface]);
     }
 
     public function install(
         \Magento\Framework\Setup\ModuleDataSetupInterface $setup,
         \Magento\Framework\Setup\ModuleContextInterface $context
-    )
-    {
+    ) {
         $this->addCategoryAttributes();
         $this->addProductAttributeGroup();
         $this->addProductAttributes();
-
-
     }
 
     private function addCategoryAttributes()
@@ -69,7 +64,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                 [
                     'type' => 'varchar',
                     'label' => 'Open Graph image',
-                    'backend' => 'Magento\Catalog\Model\Category\Attribute\Backend\Image',
+                    'backend' => \Magento\Catalog\Model\Category\Attribute\Backend\Image::class,
                     'input' => 'image',
                     'visible' => true,
                     'required' => false,
@@ -208,7 +203,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'type' => 'varchar',
                     'label' => 'Open Graph Image',
                     'input' => 'media_image',
-                    'frontend' => 'Magento\Catalog\Model\Product\Attribute\Frontend\Image',
+                    'frontend' => \Magento\Catalog\Model\Product\Attribute\Frontend\Image::class,
                     'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                     'filterable' => false,
                     'visible_on_front' => false,
