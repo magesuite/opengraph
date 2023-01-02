@@ -47,13 +47,14 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
                 'size' => 13864
             ]
         ];
-
+        $fileParameters = new \Laminas\Stdlib\Parameters();
+        $fileParameters->set('og_image', $_FILES['og_image']);
+        $this->getRequest()->setFiles($fileParameters);
         $this->dispatch('backend/opengraph/image/upload');
 
         $response = json_decode($this->getResponse()->getBody(), true);
         $this->assertTrue(isset($response['name']));
 
-        $this->assertTrue(isset($response['name']));
         $path = $this->filesystem
                 ->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)
                 ->getAbsolutePath() . \MageSuite\Opengraph\Service\CmsImageUrlProvider::OPENGRAPH_CMS_IMAGE_PATH . $response['name'];
@@ -76,7 +77,9 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
                 'size' => 13864
             ]
         ];
-
+        $fileParameters = new \Laminas\Stdlib\Parameters();
+        $fileParameters->set('brand_icon', $_FILES['brand_icon']);
+        $this->getRequest()->setFiles($fileParameters);
         $this->dispatch('backend/opengraph/image/upload');
 
         $response = json_decode($this->getResponse()->getBody(), true);
