@@ -38,7 +38,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
      */
     public function testItUploadFileCorrectly()
     {
-        $_FILES = [ // phpcs:ignore
+        $_FILES = [  // phpcs:ignore
             'og_image' => [
                 'name' => 'magento_image.jpg',
                 'type' => 'image/jpg',
@@ -48,7 +48,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
             ]
         ];
         $fileParameters = new \Laminas\Stdlib\Parameters();
-        $fileParameters->set('og_image', $_FILES['og_image']);
+        $fileParameters->set('og_image', $_FILES['og_image']);  // phpcs:ignore
         $this->getRequest()->setFiles($fileParameters);
         $this->dispatch('backend/opengraph/image/upload');
 
@@ -78,7 +78,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
             ]
         ];
         $fileParameters = new \Laminas\Stdlib\Parameters();
-        $fileParameters->set('brand_icon', $_FILES['brand_icon']);
+        $fileParameters->set('brand_icon', $_FILES['brand_icon']);  // phpcs:ignore
         $this->getRequest()->setFiles($fileParameters);
         $this->dispatch('backend/opengraph/image/upload');
 
