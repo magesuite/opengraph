@@ -10,7 +10,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \MageSuite\Opengraph\Helper\Configuration $configuration,
-        \Magento\Cms\Api\Data\PageInterface $page,
+        \Magento\Cms\Api\Data\PageInterface $page
     ) {
         parent::__construct($context);
         $this->configuration = $configuration;

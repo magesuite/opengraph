@@ -8,7 +8,7 @@ class Mime extends \Magento\Framework\App\Helper\AbstractHelper
 
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
-        \Magento\Framework\Filesystem\Io\File $file,
+        \Magento\Framework\Filesystem\Io\File $file
     ) {
         parent::__construct($context);
         $this->file = $file;

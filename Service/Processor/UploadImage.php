@@ -17,7 +17,7 @@ class UploadImage
         \Magento\Framework\Filesystem $filesystem,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\Opengraph\Service\CmsImageUrlProvider $cmsImageUrlProvider,
-        \Magento\Framework\App\RequestInterface $request,
+        \Magento\Framework\App\RequestInterface $request
     ) {
         $this->uploaderFactory = $uploaderFactory;
         $this->directoryList = $directoryList;

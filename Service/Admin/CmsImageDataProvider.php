@@ -10,7 +10,7 @@ class CmsImageDataProvider
     public function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\Opengraph\Service\CmsImageUrlProvider $cmsImageUrlProvider,
-        \Magento\Downloadable\Helper\File $fileHelper,
+        \Magento\Downloadable\Helper\File $fileHelper
     ) {
         $this->storeManager = $storeManager;
         $this->cmsImageUrlProvider = $cmsImageUrlProvider;
