@@ -34,11 +34,6 @@ class Mime extends \Magento\Framework\App\Helper\AbstractHelper
             $fileParts = explode('/', $file);
             $file = end($fileParts);
         }
-
-        $fileInfo = $this->file->getPathInfo($file);
-
-        return !isset($fileInfo['extension'])
-            ? strtolower($fileInfo['extension'])
-            : null;
+        return strtolower($this->file->getPathInfo($file)['extension']);
     }
 }
