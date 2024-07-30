@@ -4,8 +4,6 @@ namespace MageSuite\Opengraph\Block\Adminhtml;
 
 class Preview extends \Magento\Framework\View\Element\Template
 {
-    const DEFAULT_STORE = 1;
-
     /**
      * @var \Magento\Framework\Registry
      */
@@ -60,7 +58,7 @@ class Preview extends \Magento\Framework\View\Element\Template
 
     public function prepareUrl($value)
     {
-        $storeId = $this->getRequest()->getParam('store') ?? self::DEFAULT_STORE;
+        $storeId = $this->getRequest()->getParam('store') ?? $this->storeManager->getDefaultStoreView()->getId();
 
         $pageType = $this->getPageType();
 
