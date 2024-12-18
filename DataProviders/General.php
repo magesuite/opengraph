@@ -162,7 +162,7 @@ class General extends TagProvider implements TagProviderInterface
 
     private function addUrlTag()
     {
-        $currentUrl = $this->urlBuilder->getUrl('', ['_current' => true]);
+        $currentUrl = $this->urlBuilder->getCurrentUrl();
 
         $tag = $this->tagFactory->getTag('url', $currentUrl);
 
