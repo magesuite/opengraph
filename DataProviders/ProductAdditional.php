@@ -1,35 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\DataProviders;
 
 class ProductAdditional extends TagProvider implements TagProviderInterface
 {
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
-    /**
-     * @var \MageSuite\Opengraph\Factory\TagFactoryInterface
-     */
-    protected $tagFactory;
-
-    /**
-     * @var \MageSuite\Opengraph\Mapper\Product
-     */
-    protected $productMapper;
-
-    protected $tags = [];
-
     public function __construct(
-        \Magento\Framework\Registry $registry,
-        \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
-        \MageSuite\Opengraph\Mapper\Product $productMapper
-    ) {
-        $this->registry = $registry;
-        $this->tagFactory = $tagFactory;
-        $this->productMapper = $productMapper;
-    }
+        protected \Magento\Framework\Registry $registry,
+        protected \MageSuite\Opengraph\Factory\TagFactoryInterface $tagFactory,
+        protected \MageSuite\Opengraph\Mapper\Product $productMapper,
+        protected \Magento\Store\Model\StoreManagerInterface $storeManager,
+        protected $tags = []
+    ) {}
 
     public function getTags()
     {
@@ -39,6 +22,9 @@ class ProductAdditional extends TagProvider implements TagProviderInterface
             return [];
         }
 
+        $origStoreId = $product->getStoreId();
+        $this->checkAndUpdateStoreId($product);
+
         $items = $this->productMapper->getItems($product);
 
         foreach ($items as $name => $value) {
@@ -46,6 +32,17 @@ class ProductAdditional extends TagProvider implements TagProviderInterface
             $this->addProductTag($tag);
         }
 
+        $product->setStoreId($origStoreId);
+
         return $this->tags;
+    }
+
+    private function checkAndUpdateStoreId(\Magento\Catalog\Api\Data\ProductInterface $product): void
+    {
+        if ($product->getTypeId() === \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE || $product->getStoreId()) {
+            return;
+        }
+
+        $product->setStoreId((int) $this->storeManager->getDefaultStoreView()?->getId());
     }
 }
