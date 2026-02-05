@@ -1,28 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class CategoryOpengraphImageTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
-    /**
-     * @var \Magento\Catalog\Api\CategoryRepositoryInterface
-     */
-    private $categoryRepository;
-
-    /**
-     * @var \MageSuite\Opengraph\DataProviders\CategoryOpengraphImage
-     */
-    private $categoryOpengraphImageProvider;
+    protected \Magento\Framework\App\ObjectManager $objectManager;
+    protected \Magento\Framework\Registry $registry;
+    protected \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository;
+    protected \MageSuite\Opengraph\DataProviders\CategoryOpengraphImage $categoryOpengraphImageProvider;
 
     public function setUp(): void
     {
@@ -30,27 +17,16 @@ class CategoryOpengraphImageTest extends \PHPUnit\Framework\TestCase
 
         $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
         $this->categoryRepository = $this->objectManager->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
-
         $this->categoryOpengraphImageProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\CategoryOpengraphImage::class);
-    }
-
-    public static function categoriesFixture()
-    {
-        include __DIR__ . '/../_files/categories.php';
-    }
-
-    public static function categoriesFixtureRollback()
-    {
-        include __DIR__ . '/../_files/categories_rollback.php';
     }
 
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture categoriesFixture
+     * @magentoDataFixture MageSuite_Opengraph::Test/Integration/_files/categories.php
      */
-    public function testItReturnsCorrectTags()
+    public function testItReturnsCorrectTags(): void
     {
         $category = $this->categoryRepository->get(334);
         $this->registry->register('current_category', $category);

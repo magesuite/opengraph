@@ -1,49 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class CmsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
+    protected \Magento\Framework\App\ObjectManager $objectManager;
+    protected \Magento\Cms\Api\PageRepositoryInterface $pageRepository;
 
-    /**
-     * @var \Magento\Cms\Api\PageRepositoryInterface
-     */
-    protected $pageRepository;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
 
         $this->pageRepository = $this->objectManager->get(\Magento\Cms\Api\PageRepositoryInterface::class);
     }
 
-    public static function pagesFixture()
-    {
-        include __DIR__ . '/../_files/pages.php';
-    }
-
-    public static function pagesFixtureRollback()
-    {
-        include __DIR__ . '/../_files/pages_rollback.php';
-    }
-
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture pagesFixture
+     * @magentoDataFixture MageSuite_Opengraph::Test/Integration/_files/pages.php
      */
-    public function testItReturnsCorrectTags()
+    public function testItReturnsCorrectTags(): void
     {
         $this->itReturnsDefaultTags();
         $this->itReturnsOpengraphTags();
     }
 
-    private function itReturnsDefaultTags()
+    protected function itReturnsDefaultTags(): void
     {
         $page = $this->pageRepository->getById('page_without_og_tags');
 
@@ -59,7 +44,7 @@ class CmsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('article', $tags['og:type']);
     }
 
-    private function itReturnsOpengraphTags()
+    protected function itReturnsOpengraphTags(): void
     {
         $page = $this->pageRepository->getById('page_with_og_tags');
 
