@@ -1,35 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class CategoryTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
+    protected \Magento\Framework\App\ObjectManager $objectManager;
+    protected \Magento\Framework\Registry $registry;
+    protected \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository;
+    protected \MageSuite\Opengraph\DataProviders\Category $categoryProvider;
+    protected \Magento\Framework\View\Page\Config $pageConfig;
 
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
-    /**
-     * @var \Magento\Catalog\Api\CategoryRepositoryInterface
-     */
-    private $categoryRepository;
-
-    /**
-     * @var \MageSuite\Opengraph\DataProviders\Category
-     */
-    private $categoryProvider;
-
-    /**
-     * @var \Magento\Framework\View\Page\Config
-     */
-    protected $pageConfig;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
@@ -38,30 +21,20 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
         $this->pageConfig = $this->objectManager->get(\Magento\Framework\View\Page\Config::class);
     }
 
-    public static function categoriesFixture()
-    {
-        include __DIR__ . '/../_files/categories.php';
-    }
-
-    public static function categoriesFixtureRollback()
-    {
-        include __DIR__ . '/../_files/categories_rollback.php';
-    }
-
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture categoriesFixture
+     * @magentoDataFixture MageSuite_Opengraph::Test/Integration/_files/categories.php
      */
-    public function testItReturnsCorrectTags()
+    public function testItReturnsCorrectTags(): void
     {
         $this->itReturnsDefaultTags();
         $this->itReturnsOpengraphTags();
         $this->itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags();
     }
 
-    private function itReturnsDefaultTags()
+    protected function itReturnsDefaultTags(): void
     {
         $category = $this->categoryRepository->get(333);
 
@@ -77,7 +50,7 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('website', $tags['og:type']);
     }
 
-    private function itReturnsOpengraphTags()
+    protected function itReturnsOpengraphTags(): void
     {
         $category = $this->categoryRepository->get(334);
 
@@ -93,7 +66,7 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('article', $tags['og:type']);
     }
 
-    private function itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags()
+    protected function itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags(): void
     {
         $this->pageConfig->getTitle()->set('title');
         $this->pageConfig->setDescription('description');

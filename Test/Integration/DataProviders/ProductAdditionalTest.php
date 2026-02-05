@@ -1,56 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
+    protected \Magento\Framework\App\ObjectManager $objectManager;
+    protected \Magento\Framework\Registry $registry;
+    protected \Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
+    protected \MageSuite\Opengraph\DataProviders\ProductAdditional $productAdditionalProvider;
 
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
-    /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
-     */
-    private $productRepository;
-
-    /**
-     * @var \MageSuite\Opengraph\DataProviders\ProductAdditional
-     */
-    private $productAdditionalProvider;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
         $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
         $this->productRepository = $this->objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
-
         $this->productAdditionalProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\ProductAdditional::class);
-    }
-
-    public static function productWithAttributesFixture()
-    {
-        include __DIR__ . '/../_files/product_with_attributes.php';
-    }
-
-    public static function productWithAttributesFixtureRollback()
-    {
-        include __DIR__ . '/../_files/product_with_attributes_rollback.php';
     }
 
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture productWithAttributesFixture
+     * @magentoDataFixture MageSuite_Opengraph::Test/Integration/_files/product_with_attributes.php
      */
-    public function testItReturnsCorrectTags()
+    public function testItReturnsCorrectTags(): void
     {
         $product = $this->productRepository->get('product_with_attributes');
 

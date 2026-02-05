@@ -1,33 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class ProductTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
-    /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
-     */
-    private $productRepository;
-
-    /**
-     * @var \MageSuite\Opengraph\DataProviders\Product
-     */
-    private $productProvider;
-
-    /**
-     * @var \Magento\Framework\View\Page\Config
-     */
-    protected $pageConfig;
+    protected \Magento\Framework\App\ObjectManager $objectManager;
+    protected \Magento\Framework\Registry $registry;
+    protected \Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
+    protected \MageSuite\Opengraph\DataProviders\Product $productProvider;
+    protected \Magento\Framework\View\Page\Config $pageConfig;
 
     public function setUp(): void
     {
@@ -38,30 +21,20 @@ class ProductTest extends \PHPUnit\Framework\TestCase
         $this->pageConfig = $this->objectManager->get(\Magento\Framework\View\Page\Config::class);
     }
 
-    public static function productsFixture()
-    {
-        include __DIR__ . '/../_files/products.php';
-    }
-
-    public static function productsFixtureRollback()
-    {
-        include __DIR__ . '/../_files/products_rollback.php';
-    }
-
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture productsFixture
+     * @magentoDataFixture MageSuite_Opengraph::Test/Integration/_files/products.php
      */
-    public function testItReturnsCorrectTags()
+    public function testItReturnsCorrectTags(): void
     {
         $this->itReturnsDefaultTags();
         $this->itReturnsOpengraphTags();
         $this->itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags();
     }
 
-    private function itReturnsDefaultTags()
+    private function itReturnsDefaultTags(): void
     {
         $product = $this->productRepository->get('product_without_og_tags');
 
@@ -80,7 +53,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('product', $tags['og:type']);
     }
 
-    private function itReturnsOpengraphTags()
+    private function itReturnsOpengraphTags(): void
     {
         $product = $this->productRepository->get('product_with_og_tags');
 
@@ -99,7 +72,7 @@ class ProductTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('article', $tags['og:type']);
     }
 
-    private function itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags()
+    private function itReturnsPageconfigTagsWhenNoMetatitleAndMetadescriptionTags(): void
     {
         $this->pageConfig->getTitle()->set('title');
         $this->pageConfig->setDescription('description');
