@@ -1,28 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class GeneralTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * @var \MageSuite\Opengraph\DataProviders\General
-     */
-    private $dataProvider;
-
-    /**
-     * @var \Magento\Framework\View\Page\Config
-     */
-    protected $pageConfig;
+    protected ?\Magento\TestFramework\ObjectManager $objectManager;
+    protected ?\MageSuite\Opengraph\DataProviders\General $dataProvider;
+    protected ?\Magento\Framework\View\Page\Config $pageConfig;
 
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
         $this->dataProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\General::class);
         $this->pageConfig = $this->objectManager->get(\Magento\Framework\View\Page\Config::class);
     }

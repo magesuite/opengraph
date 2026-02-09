@@ -11,9 +11,9 @@ namespace MageSuite\Opengraph\Test\Integration\Controller\Adminhtml\Image;
  */
 class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \MageSuite\Opengraph\Service\Processor\UploadImage $uploadProcessor;
-    protected \Magento\Framework\Filesystem $filesystem;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager;
+    protected ?\MageSuite\Opengraph\Service\Processor\UploadImage $uploadProcessor;
+    protected ?\Magento\Framework\Filesystem $filesystem;
 
     protected function setUp(): void
     {

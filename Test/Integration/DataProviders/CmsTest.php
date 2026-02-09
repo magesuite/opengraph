@@ -6,8 +6,8 @@ namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class CmsTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \Magento\Cms\Api\PageRepositoryInterface $pageRepository;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager;
+    protected ?\Magento\Cms\Api\PageRepositoryInterface $pageRepository;
 
     protected function setUp(): void
     {

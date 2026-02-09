@@ -6,11 +6,11 @@ namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class ProductTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \Magento\Framework\Registry $registry;
-    protected \Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
-    protected \MageSuite\Opengraph\DataProviders\Product $productProvider;
-    protected \Magento\Framework\View\Page\Config $pageConfig;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager;
+    protected ?\Magento\Framework\Registry $registry;
+    protected ?\Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
+    protected ?\MageSuite\Opengraph\DataProviders\Product $productProvider;
+    protected ?\Magento\Framework\View\Page\Config $pageConfig;
 
     public function setUp(): void
     {

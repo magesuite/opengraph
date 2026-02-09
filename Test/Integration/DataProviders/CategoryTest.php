@@ -6,11 +6,11 @@ namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class CategoryTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \Magento\Framework\Registry $registry;
-    protected \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository;
-    protected \MageSuite\Opengraph\DataProviders\Category $categoryProvider;
-    protected \Magento\Framework\View\Page\Config $pageConfig;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager;
+    protected ?\Magento\Framework\Registry $registry;
+    protected ?\Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository;
+    protected ?\MageSuite\Opengraph\DataProviders\Category $categoryProvider;
+    protected ?\Magento\Framework\View\Page\Config $pageConfig;
 
     protected function setUp(): void
     {
