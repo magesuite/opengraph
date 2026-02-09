@@ -6,10 +6,10 @@ namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \Magento\Framework\Registry $registry;
-    protected \Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
-    protected \MageSuite\Opengraph\DataProviders\ProductAdditional $productAdditionalProvider;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager;
+    protected ?\Magento\Framework\Registry $registry;
+    protected ?\Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
+    protected ?\MageSuite\Opengraph\DataProviders\ProductAdditional $productAdditionalProvider;
 
     protected function setUp(): void
     {

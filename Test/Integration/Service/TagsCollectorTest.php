@@ -1,18 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Test\Integration\Service;
 
 class TagsCollectorTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * @var \MageSuite\Opengraph\Service\TagsCollector
-     */
-    private $tagsCollector;
+    protected ?\Magento\TestFramework\ObjectManager $objectManager;
+    protected ?\MageSuite\Opengraph\Service\TagsCollector $tagsCollector;
 
     public function setUp(): void
     {

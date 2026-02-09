@@ -6,10 +6,10 @@ namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class CategoryOpengraphImageTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \Magento\Framework\Registry $registry;
-    protected \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository;
-    protected \MageSuite\Opengraph\DataProviders\CategoryOpengraphImage $categoryOpengraphImageProvider;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager;
+    protected ?\Magento\Framework\Registry $registry;
+    protected ?\Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository;
+    protected ?\MageSuite\Opengraph\DataProviders\CategoryOpengraphImage $categoryOpengraphImageProvider;
 
     public function setUp(): void
     {

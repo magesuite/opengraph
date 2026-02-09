@@ -1,23 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Test\Integration\Helper;
 
 class ConfigurationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * @var \MageSuite\Opengraph\Helper\Configuration
-     */
-    private $configuration;
+    protected ?\Magento\TestFramework\ObjectManager $objectManager;
+    protected ?\MageSuite\Opengraph\Helper\Configuration $configuration;
 
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
         $this->configuration = $this->objectManager->get(\MageSuite\Opengraph\Helper\Configuration::class);
     }
 
