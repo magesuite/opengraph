@@ -40,6 +40,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
         ];
         $fileParameters = new \Laminas\Stdlib\Parameters();
         $fileParameters->set('og_image', $_FILES['og_image']);  // phpcs:ignore
+        $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
         $this->getRequest()->setFiles($fileParameters);
         $this->dispatch('backend/opengraph/image/upload');
 
@@ -71,6 +72,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
         $fileParameters = new \Laminas\Stdlib\Parameters();
         $fileParameters->set('brand_icon', $_FILES['brand_icon']);  // phpcs:ignore
         $this->getRequest()->setFiles($fileParameters);
+        $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
         $this->dispatch('backend/opengraph/image/upload');
 
         $response = json_decode($this->getResponse()->getBody(), true);
