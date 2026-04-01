@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace MageSuite\Opengraph\Controller\Adminhtml\Image;
 
-class Upload extends \Magento\Backend\App\Action
+class Upload extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
+    public const ADMIN_RESOURCE = 'Magento_Cms::page';
+
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         protected \MageSuite\Opengraph\Service\Processor\UploadImageFactory $uploadImage
@@ -22,10 +24,5 @@ class Upload extends \Magento\Backend\App\Action
         }
 
         return $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON)->setData($result);
-    }
-
-    protected function _isAllowed() //phpcs:ignore
-    {
-        return true;
     }
 }
