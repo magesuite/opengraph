@@ -17,10 +17,6 @@ class Tag
      */
     protected $value;
 
-    public function __construct(
-        protected \Magento\Framework\Escaper $escaper
-    ){}
-
     /**
      * @return string
      */
@@ -50,7 +46,7 @@ class Tag
      */
     public function setValue($value)
     {
-        $this->value = $this->escaper->escapeHtml(trim($value ?? ''));
+        $this->value = trim($value ?? '');
     }
 
     public function getOpengraphName()
