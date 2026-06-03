@@ -27,7 +27,7 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
     {
         $config = $this->getConfig();
 
-        return (boolean) $config['is_enabled'];
+        return (bool) $config['is_enabled'];
     }
 
     public function getFbAppId()
