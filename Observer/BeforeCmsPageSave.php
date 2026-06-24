@@ -24,7 +24,7 @@ class BeforeCmsPageSave implements \Magento\Framework\Event\ObserverInterface
         $cmsImageData = $pageObject->getData('og_image');
 
         if ($cmsImageData && isset($cmsImageData[0]['name'])) {
-            $pageObject->setData('og_image', $cmsImageData[0]['name']);
+            $pageObject->setData('og_image', basename((string)$cmsImageData[0]['name']));
         }
     }
 }
