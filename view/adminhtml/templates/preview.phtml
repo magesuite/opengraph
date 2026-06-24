@@ -1,6 +1,7 @@
 <?php
 
 /** @var \MageSuite\Opengraph\Block\Adminhtml\Preview $block */
+/** @var \Magento\Framework\Escaper $escaper */
 $tags = $block->getTags();
 
 if ($tags) : ?>
@@ -17,14 +18,15 @@ if ($tags) : ?>
                     </tr>
                     <?php foreach ($tags as $key => $value) : ?>
                         <?php if ($key == 'og:image') {
-                            $value = '<img src="' . $value . '" width="148" />';
+                            $value = '<img src="' . $escaper->escapeHtmlAttr($value) . '" width="148" />';
                         } elseif ($key == 'og:url') {
-                            $value = $block->prepareUrl($value);
+                            $preparedUrl = $block->prepareUrl($value);
+                            $value = '<a href="' . $escaper->escapeHtmlAttr($preparedUrl) . '">' . $escaper->escapeHtml($preparedUrl) . '</a>';
                         } else {
-                            $value = strip_tags($value);
+                            $value = $escaper->escapeHtml(strip_tags($value));
                         } ?>
                         <tr>
-                            <td><?= /* @noEscape */ $key ?></td>
+                            <td><?= $escaper->escapeHtml($key) ?></td>
                             <td><?= /* @noEscape */ $value ?></td>
                         </tr>
                     <?php endforeach; ?>

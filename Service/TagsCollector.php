@@ -1,20 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Service;
 
 class TagsCollector
 {
-    /**
-     * @var array
-     */
-    protected $dataProviders;
-
-    public function __construct(array $dataProviders)
+    public function __construct(protected array $dataProviders, protected array $tagPostProcessors = [])
     {
-        $this->dataProviders = $dataProviders;
     }
 
-    public function getTags($pageType = null)
+    public function getTags(?string $pageType = null): array
     {
         if (empty($pageType) || !isset($this->dataProviders[$pageType])) {
             $pageType = \MageSuite\Opengraph\Helper\PageType::DEFAULT_PAGE_TYPE;
@@ -34,10 +30,18 @@ class TagsCollector
             $tags = $this->mergeTags($tags, $dataProviderClass->getTags());
         }
 
+        foreach ($this->tagPostProcessors as $postProcessor) {
+            if (!$postProcessor instanceof \MageSuite\Opengraph\DataProviders\TagsPostProcessorInterface) {
+                continue;
+            }
+
+            $tags = $postProcessor->process($tags, $pageType);
+        }
+
         return $tags;
     }
 
-    protected function sortProviders($dataProviders)
+    protected function sortProviders(array $dataProviders): array
     {
         usort($dataProviders, function ($a, $b) {
             $aSortOrder = $a['sortOrder'] ?? 0;
@@ -49,7 +53,7 @@ class TagsCollector
         return $dataProviders;
     }
 
-    protected function mergeTags($currentTags, $newTags)
+    protected function mergeTags(array $currentTags, array $newTags): array
     {
         if (empty($currentTags)) {
             return $newTags;
