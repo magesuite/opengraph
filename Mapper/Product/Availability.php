@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Mapper\Product;
 
 class Availability
 {
-    public function getTagValue($productData)
-    {
-        $isInStock = $productData['quantity_and_stock_status']['is_in_stock'] ?? false;
-        $availability = $isInStock ? 'instock' : 'oos';
+    public const IN_STOCK = 'in stock';
+    public const OUT_OF_STOCK = 'out of stock';
 
-        return $availability;
+    public function getTagValue(\Magento\Catalog\Model\Product $product): string
+    {
+        return $product->isSalable() ? self::IN_STOCK : self::OUT_OF_STOCK;
     }
 }

@@ -1,22 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Model\Source;
 
 class Type implements \Magento\Framework\Data\OptionSourceInterface
 {
-    /**
-     * @var array
-     */
-    protected $options;
+    protected ?array $options = null;
 
-    protected $types = ['article', 'website'];
+    protected array $types = ['article', 'product', 'website'];
 
-    /**
-     * Get options
-     *
-     * @return array
-     */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         if ($this->options !== null) {
             return $this->options;
@@ -30,6 +24,7 @@ class Type implements \Magento\Framework\Data\OptionSourceInterface
                 'value' => $type,
             ];
         }
+
         $this->options = $options;
 
         return $this->options;

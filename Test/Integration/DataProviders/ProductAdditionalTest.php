@@ -36,7 +36,7 @@ class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
 
         $tags = $this->productAdditionalProvider->getTags();
 
-        $this->assertEquals('instock', $tags['product:availability']);
+        $this->assertEquals('in stock', $tags['product:availability']);
         $this->assertEquals('new', $tags['product:condition']);
         $this->assertEquals('USD', $tags['product:price:currency']);
         $this->assertEquals(10, $tags['product:price:amount'], '', 0);
