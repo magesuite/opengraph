@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\Opengraph\Model\Entity\Attribute\Source;
 
 class Type extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
-    /**
-     * @var \MageSuite\Opengraph\Model\Source\Type
-     */
-    protected $typeSource;
+    public function __construct(
+        protected \MageSuite\Opengraph\Model\Source\Type $typeSource
+    ) {}
 
-    public function __construct(\MageSuite\Opengraph\Model\Source\Type $typeSource)
+    public function getAllOptions(): array
     {
-        $this->typeSource = $typeSource;
-    }
+        $emptyOption = [
+            'label' => ' ',
+            'value' => ''
+        ];
 
-    public function getAllOptions()
-    {
-        return $this->typeSource->toOptionArray();
+        return array_merge([$emptyOption], $this->typeSource->toOptionArray());
     }
 }
