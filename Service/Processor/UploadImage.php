@@ -41,10 +41,10 @@ class UploadImage
         $uploader->setAllowRenameFiles(false);
         $uploader->setFilesDispersion(false);
 
-        $path = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)
+        $absolutePath = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)
             ->getAbsolutePath($path);
 
-        $result = $uploader->save($path);
+        $result = $uploader->save($absolutePath);
 
         $imagePath = $uploader->getUploadedFileName();
 
