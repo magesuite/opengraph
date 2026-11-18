@@ -29,8 +29,20 @@ class Preview extends \Magento\Framework\View\Element\Template
      */
     protected $tagsCollector;
 
+    /**
+     * @var string|null
+     */
     protected $pageTypeValue;
 
+    /**
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
+     * @param \MageSuite\Opengraph\Helper\PageType $pageType
+     * @param \MageSuite\Opengraph\Service\TagsCollector $tagsCollector
+     * @param array $data
+     */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
@@ -49,11 +61,22 @@ class Preview extends \Magento\Framework\View\Element\Template
         $this->tagsCollector = $tagsCollector;
     }
 
+    /**
+     * Collect tags for the page being previewed.
+     *
+     * @return array
+     */
     public function getTags()
     {
         return $this->tagsCollector->getTags($this->getPageType());
     }
 
+    /**
+     * Resolve the page URL for the selected preview store.
+     *
+     * @param string $value
+     * @return string
+     */
     public function prepareUrl($value)
     {
         $storeId = $this->getRequest()->getParam('store') ?? $this->storeManager->getDefaultStoreView()->getId();
@@ -89,6 +112,11 @@ class Preview extends \Magento\Framework\View\Element\Template
         return $value;
     }
 
+    /**
+     * Cache the page type for subsequent tag and URL lookups.
+     *
+     * @return string
+     */
     protected function getPageType()
     {
         if (!$this->pageTypeValue) {
@@ -98,6 +126,13 @@ class Preview extends \Magento\Framework\View\Element\Template
         return $this->pageTypeValue;
     }
 
+    /**
+     * Replace the current store's base URL with the preview store's base URL.
+     *
+     * @param string $url
+     * @param int|string $storeId
+     * @return string
+     */
     protected function replaceStoreUrl($url, $storeId)
     {
         return str_replace(

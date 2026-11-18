@@ -15,7 +15,10 @@ class AvailabilityTest extends \PHPUnit\Framework\TestCase
         $product = $this->createStub(\Magento\Catalog\Model\Product::class);
         $product->method('isSalable')->willReturn($isSalable);
 
-        $this->assertSame($expectedAvailability, (new \MageSuite\Opengraph\Mapper\Product\Availability())->getTagValue($product));
+        $this->assertSame(
+            $expectedAvailability,
+            (new \MageSuite\Opengraph\Mapper\Product\Availability())->getTagValue($product)
+        );
     }
 
     public static function getAvailabilityCases(): array

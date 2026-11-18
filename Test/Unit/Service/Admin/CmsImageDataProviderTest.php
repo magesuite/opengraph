@@ -14,7 +14,10 @@ class CmsImageDataProviderTest extends \PHPUnit\Framework\TestCase
         $storeManager = $this->createStub(\Magento\Store\Model\StoreManagerInterface::class);
         $storeManager->method('getStore')->willReturn($store);
         $fileHelper = $this->createMock(\Magento\Downloadable\Helper\File::class);
-        $fileHelper->expects($this->once())->method('ensureFileInFilesystem')->with($path . $imageName)->willReturn(false);
+        $fileHelper->expects($this->once())
+            ->method('ensureFileInFilesystem')
+            ->with($path . $imageName)
+            ->willReturn(false);
         $fileHelper->expects($this->never())->method('getFileSize');
         $imageDataProvider = new \MageSuite\Opengraph\Service\Admin\CmsImageDataProvider(
             $storeManager,
