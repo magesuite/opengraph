@@ -40,15 +40,13 @@ class Preview extends \Magento\Framework\View\Element\Template
         \MageSuite\Opengraph\Service\TagsCollector $tagsCollector,
         array $data = []
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, array_replace($data, ['template' => 'preview.phtml']));
 
         $this->registry = $registry;
         $this->storeManager = $storeManager;
         $this->categoryRepository = $categoryRepository;
         $this->pageType = $pageType;
         $this->tagsCollector = $tagsCollector;
-
-        $this->setTemplate('preview.phtml');
     }
 
     public function getTags()

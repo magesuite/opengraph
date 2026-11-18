@@ -6,10 +6,13 @@ namespace MageSuite\Opengraph\Test\Unit\Mapper\Product;
 
 class AvailabilityTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @dataProvider getAvailabilityCases
+     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getAvailabilityCases')]
     public function testItMapsSalableStatusToAvailability(bool $isSalable, string $expectedAvailability): void
     {
-        $product = $this->createMock(\Magento\Catalog\Model\Product::class);
+        $product = $this->createStub(\Magento\Catalog\Model\Product::class);
         $product->method('isSalable')->willReturn($isSalable);
 
         $this->assertSame($expectedAvailability, (new \MageSuite\Opengraph\Mapper\Product\Availability())->getTagValue($product));
