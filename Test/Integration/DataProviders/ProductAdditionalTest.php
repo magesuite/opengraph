@@ -6,9 +6,24 @@ namespace MageSuite\Opengraph\Test\Integration\DataProviders;
 
 class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var \Magento\Framework\App\ObjectManager|null
+     */
     protected ?\Magento\Framework\App\ObjectManager $objectManager;
+
+    /**
+     * @var \Magento\Framework\Registry|null
+     */
     protected ?\Magento\Framework\Registry $registry;
+
+    /**
+     * @var \Magento\Catalog\Api\ProductRepositoryInterface|null
+     */
     protected ?\Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
+
+    /**
+     * @var \MageSuite\Opengraph\DataProviders\ProductAdditional|null
+     */
     protected ?\MageSuite\Opengraph\DataProviders\ProductAdditional $productAdditionalProvider;
 
     protected function setUp(): void
@@ -16,7 +31,9 @@ class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
         $this->productRepository = $this->objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
-        $this->productAdditionalProvider = $this->objectManager->get(\MageSuite\Opengraph\DataProviders\ProductAdditional::class);
+        $this->productAdditionalProvider = $this->objectManager->get(
+            \MageSuite\Opengraph\DataProviders\ProductAdditional::class
+        );
     }
 
     /**
@@ -39,9 +56,9 @@ class ProductAdditionalTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('in stock', $tags['product:availability']);
         $this->assertEquals('new', $tags['product:condition']);
         $this->assertEquals('USD', $tags['product:price:currency']);
-        $this->assertEquals(10, $tags['product:price:amount'], '', 0);
+        $this->assertEquals(10, $tags['product:price:amount']);
         $this->assertEquals('USD', $tags['product:sale_price:currency']);
-        $this->assertEquals(5, $tags['product:sale_price:amount'], '', 0);
+        $this->assertEquals(5, $tags['product:sale_price:amount']);
         $this->assertEquals('Adidas', $tags['product:brand']);
         $this->assertEquals('2018-01-01 01:01:02', $tags['product:sale_price_dates:start']);
         $this->assertEquals('2028-01-01 01:11:02', $tags['product:sale_price_dates:end']);

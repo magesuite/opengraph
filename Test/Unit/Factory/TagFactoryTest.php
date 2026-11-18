@@ -5,20 +5,16 @@ namespace MageSuite\Opengraph\Test\Unit\Factory;
 class TagFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
      * @var \MageSuite\Opengraph\Factory\TagFactory
      */
     private $tagFactory;
 
     public function setUp(): void
     {
-        $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
+        $tagFactory = $this->createMock(\MageSuite\Opengraph\Model\TagFactory::class);
+        $tagFactory->expects($this->once())->method('create')->willReturn(new \MageSuite\Opengraph\Model\Tag());
 
-        $this->tagFactory = $this->objectManager->get(\MageSuite\Opengraph\Factory\TagFactory::class);
+        $this->tagFactory = new \MageSuite\Opengraph\Factory\TagFactory($tagFactory);
     }
 
     public function testItReturnsTag()

@@ -5,11 +5,6 @@ namespace MageSuite\Opengraph\Test\Unit\Helper;
 class PageTypeTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
      * @var \MageSuite\Opengraph\Helper\PageType
      */
     private $pageType;
@@ -26,13 +21,13 @@ class PageTypeTest extends \PHPUnit\Framework\TestCase
 
     public function setUp(): void
     {
-        $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
-        $this->pageType = $this->objectManager->get(\MageSuite\Opengraph\Helper\PageType::class);
-        $this->request = $this->objectManager->get(\Magento\Framework\App\Request\Http::class);
-        $this->registry = $this->objectManager->get(\Magento\Framework\Registry::class);
-
-        $this->objectManager->get(\Magento\Framework\App\State::class)->setAreaCode('frontend');
+        $this->request = $this->createStub(\Magento\Framework\App\Request\Http::class);
+        $this->registry = new \Magento\Framework\Registry();
+        $this->pageType = new \MageSuite\Opengraph\Helper\PageType(
+            $this->createStub(\Magento\Framework\App\Helper\Context::class),
+            $this->request,
+            $this->registry
+        );
     }
 
     public function testItReturnsDefaultType()
@@ -44,12 +39,11 @@ class PageTypeTest extends \PHPUnit\Framework\TestCase
 
     public function testItReturnsSpecificType()
     {
-        $this->request->setRouteName('cms');
+        $this->request->method('getRouteName')->willReturnOnConsecutiveCalls('cms', 'catalog', 'catalog');
 
         $pageType = $this->pageType->getPageType();
         $this->assertEquals('cms', $pageType);
 
-        $this->request->setRouteName('catalog');
         $this->registry->register('current_category', 'dummy');
 
         $pageType = $this->pageType->getPageType();
@@ -59,7 +53,5 @@ class PageTypeTest extends \PHPUnit\Framework\TestCase
 
         $pageType = $this->pageType->getPageType();
         $this->assertEquals('product', $pageType);
-
-        $this->request->setRouteName(null);
     }
 }

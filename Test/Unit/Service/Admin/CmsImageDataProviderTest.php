@@ -4,41 +4,29 @@ namespace MageSuite\Opengraph\Test\Unit\Service\Admin;
 
 class CmsImageDataProviderTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * @var \MageSuite\Opengraph\Service\Admin\CmsImageDataProvider
-     */
-    protected $imageTeaserDataProvider;
-
-    /**
-     * @var \Magento\Framework\Filesystem
-     */
-    protected $filesystem;
-
-    public function setUp(): void
-    {
-        $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
-        $this->imageTeaserDataProvider = $this->objectManager->create(\MageSuite\Opengraph\Service\Admin\CmsImageDataProvider::class);
-
-        $this->filesystem = $this->objectManager->create(\Magento\Framework\Filesystem::class);
-    }
-
     public function testItReturnsImageDataCorrectly()
     {
-        $response = $this->imageTeaserDataProvider->getImageData('magento_image.jpg', \MageSuite\Opengraph\Service\CmsImageUrlProvider::OPENGRAPH_CMS_IMAGE_PATH);
+        $imageName = 'magento_image.jpg';
+        $path = \MageSuite\Opengraph\Service\CmsImageUrlProvider::OPENGRAPH_CMS_IMAGE_PATH;
+        $expectedUrl = 'http://localhost/media/' . $path . $imageName;
+        $store = $this->createStub(\Magento\Store\Model\Store::class);
+        $store->method('getBaseUrl')->willReturn('http://localhost/media/');
+        $storeManager = $this->createStub(\Magento\Store\Model\StoreManagerInterface::class);
+        $storeManager->method('getStore')->willReturn($store);
+        $fileHelper = $this->createMock(\Magento\Downloadable\Helper\File::class);
+        $fileHelper->expects($this->once())
+            ->method('ensureFileInFilesystem')
+            ->with($path . $imageName)
+            ->willReturn(false);
+        $fileHelper->expects($this->never())->method('getFileSize');
+        $imageDataProvider = new \MageSuite\Opengraph\Service\Admin\CmsImageDataProvider(
+            $storeManager,
+            new \MageSuite\Opengraph\Service\CmsImageUrlProvider($storeManager),
+            $fileHelper
+        );
 
-        $this->assertArrayHasKey('url', $response[0]);
-        $this->assertArrayHasKey('name', $response[0]);
+        $response = $imageDataProvider->getImageData($imageName, $path);
 
-        $expectedPath = 'http://localhost/media/' . \MageSuite\Opengraph\Service\CmsImageUrlProvider::OPENGRAPH_CMS_IMAGE_PATH . 'magento_image.jpg';
-
-        $response[0]['url'] = str_replace('pub/', '', $response[0]['url']);
-        $this->assertEquals($expectedPath, $response[0]['url']);
-        $this->assertEquals('magento_image.jpg', $response[0]['name']);
+        $this->assertSame([['url' => $expectedUrl, 'name' => $imageName, 'size' => 0]], $response);
     }
 }
